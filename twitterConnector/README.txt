@@ -21,12 +21,12 @@ How to run this sample
   1. tweet:
     function main (string[] args) {
 
-        sample:Twitter twitterConnector = new sample:Twitter(args[0], args[1], args[2], args[3]);
+        connectors:Twitter twitterConnector = new connectors:Twitter(args[0], args[1], args[2], args[3]);
 
         message tweetResponse;
         json tweetJSONResponse;
 
-        tweetResponse = sample:Twitter.tweet(twitterConnector, args[4]);
+        tweetResponse = connectors:Twitter.tweet(twitterConnector, args[4]);
 
         tweetJSONResponse = message:getJsonPayload(tweetResponse);
         system:println(json:toString(tweetJSONResponse));
@@ -37,12 +37,12 @@ How to run this sample
   2. search:
     function main (string[] args) {
 
-        sample:Twitter twitterConnector = new sample:Twitter(args[0], args[1], args[2], args[3]);
+        connectors:Twitter twitterConnector = new connectors:Twitter(args[0], args[1], args[2], args[3]);
 
         message tweetResponse;
         json tweetJSONResponse;
 
-        tweetResponse = sample:Twitter.search(twitterConnector, args[4]);
+        tweetResponse = connectors:Twitter.search(twitterConnector, args[4]);
 
         tweetJSONResponse = message:getJsonPayload(tweetResponse);
         system:println(json:toString(tweetJSONResponse));
@@ -53,12 +53,12 @@ How to run this sample
   3. reTweet:
     function main (string[] args) {
 
-        sample:Twitter twitterConnector = new sample:Twitter(args[0], args[1], args[2], args[3]);
+        connectors:Twitter twitterConnector = new connectors:Twitter(args[0], args[1], args[2], args[3]);
 
         message tweetResponse;
         json tweetJSONResponse;
 
-        tweetResponse = sample:Twitter.reTweet(twitterConnector, args[4]);
+        tweetResponse = connectors:Twitter.reTweet(twitterConnector, args[4]);
 
         tweetJSONResponse = message:getJsonPayload(tweetResponse);
         system:println(json:toString(tweetJSONResponse));
@@ -69,12 +69,12 @@ How to run this sample
   4. unReTweet:
     function main (string[] args) {
 
-        sample:Twitter twitterConnector = new sample:Twitter(args[0], args[1], args[2], args[3]);
+        connectors:Twitter twitterConnector = new connectors:Twitter(args[0], args[1], args[2], args[3]);
 
         message tweetResponse;
         json tweetJSONResponse;
 
-        tweetResponse = sample:Twitter.unReTweet(twitterConnector, args[4]);
+        tweetResponse = connectors:Twitter.unReTweet(twitterConnector, args[4]);
 
         tweetJSONResponse = message:getJsonPayload(tweetResponse);
         system:println(json:toString(tweetJSONResponse));
@@ -88,7 +88,7 @@ How to run this sample
          message tweetResponse;
             json tweetJSONResponse;
 
-            tweetResponse = sample:Twitter.showStatus(twitterConnector, args[4]);
+            tweetResponse = connectors:Twitter.showStatus(twitterConnector, args[4]);
 
             tweetJSONResponse = message:getJsonPayload(tweetResponse);
             system:println(json:toString(tweetJSONResponse));
@@ -99,12 +99,12 @@ How to run this sample
   6. destroyStatus:
     function main (string[] args) {
 
-        sample:Twitter twitterConnector = new sample:Twitter(args[0], args[1], args[2], args[3]);
+        connectors:Twitter twitterConnector = new connectors:Twitter(args[0], args[1], args[2], args[3]);
 
         message tweetResponse;
         json tweetJSONResponse;
 
-        tweetResponse = sample:Twitter.destroyStatus(twitterConnector, args[4]);
+        tweetResponse = connectors:Twitter.destroyStatus(twitterConnector, args[4]);
 
         tweetJSONResponse = message:getJsonPayload(tweetResponse);
         system:println(json:toString(tweetJSONResponse));
@@ -115,12 +115,12 @@ How to run this sample
   7. getClosestTrendLocations:
     function main (string[] args) {
 
-        sample:Twitter twitterConnector = new sample:Twitter(args[0], args[1], args[2], args[3]);
+        connectors:Twitter twitterConnector = new connectors:Twitter(args[0], args[1], args[2], args[3]);
 
         message tweetResponse;
         json tweetJSONResponse;
 
-        tweetResponse = sample:Twitter.getClosestTrendLocations(twitterConnector, args[4], args[5]);
+        tweetResponse = connectors:Twitter.getClosestTrendLocations(twitterConnector, args[4], args[5]);
 
         tweetJSONResponse = message:getJsonPayload(tweetResponse);
         system:println(json:toString(tweetJSONResponse));
@@ -131,12 +131,12 @@ How to run this sample
   7. getTopTrendsByPlace:
     function main (string[] args) {
 
-        sample:Twitter twitterConnector = new sample:Twitter(args[0], args[1], args[2], args[3]);
+        connectors:Twitter twitterConnector = new connectors:Twitter(args[0], args[1], args[2], args[3]);
 
         message tweetResponse;
         json tweetJSONResponse;
 
-        tweetResponse = sample:Twitter.getTopTrendsByPlace(twitterConnector, args[4]);
+        tweetResponse = connectors:Twitter.getTopTrendsByPlace(twitterConnector, args[4]);
 
         tweetJSONResponse = message:getJsonPayload(tweetResponse);
         system:println(json:toString(tweetJSONResponse));

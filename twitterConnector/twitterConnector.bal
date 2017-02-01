@@ -1,4 +1,4 @@
-package org.wso2.ballerina.sample;
+package org.wso2.ballerina.connectors;
 
 import ballerina.lang.array;
 import ballerina.lang.json;
@@ -228,12 +228,12 @@ function constructOAuthHeader(message request, string httpMethod, string service
 
 function main (string[] args) {
 
-    sample:Twitter twitterConnector = new sample:Twitter(args[0], args[1], args[2], args[3]);
+    connectors:Twitter twitterConnector = new connectors:Twitter(args[0], args[1], args[2], args[3]);
 
     message tweetResponse;
     json tweetJSONResponse;
 
-    tweetResponse = sample:Twitter.getTopTrendsByPlace(twitterConnector, args[4]);
+    tweetResponse = connectors:Twitter.getTopTrendsByPlace(twitterConnector, args[4]);
 
     tweetJSONResponse = message:getJsonPayload(tweetResponse);
     system:println(json:toString(tweetJSONResponse));
