@@ -25,7 +25,7 @@ connector Twitter (string consumerKey, string consumerSecret, string accessToken
         tweetPath = "/1.1/statuses/update.json";
         serviceEP = "https://api.twitter.com" + tweetPath;
         parameters["status"] = msg;
-        tweetPath = tweetPath + "?status="+uri:encode(msg);
+        tweetPath = tweetPath + "?status=" + uri:encode(msg);
         constructOAuthHeader(request, "POST", serviceEP, consumerKey, consumerSecret, accessToken, accessTokenSecret, parameters);
 
         message:setHeader(request, "User-Agent", "Ballerina-1.0");
