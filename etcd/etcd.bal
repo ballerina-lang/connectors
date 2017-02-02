@@ -25,7 +25,7 @@ connector etcd (string etcdURL, string username, string password, string apiVers
         return response;
     }
 
-    action setKeyValue(etcd t, string key, string value, string ttl) (message) {
+    action setKeyValue(etcd t, string key, string value) (message) {
 	
 
 	if ((string:length(username) > 0) && (string:length(password) > 0) ){
@@ -107,18 +107,14 @@ connector etcd (string etcdURL, string username, string password, string apiVers
 
 function main (string[] args) {
 
-    connectors:etcd etcdConnector = new connectors:etcd("http://127.0.0.1:2379", "root", "password", "v2");
+    connectors:etcd etcdConnector = new connectors:etcd("http://127.0.0.1:2379", "root", "test123", "v2");
+    
     message etcdResponse;
-    int ln; 
 
     // add key/value to the etcd
     if (args[0] == "setKeyValue"){
 
-	if (array:length(args) < 4 ){
-		args[3] = "null";
-	}
-
-    	etcdResponse = connectors:etcd.setKeyValue(etcdConnector,args[1],args[2],args[3]);
+    	etcdResponse = connectors:etcd.setKeyValue(etcdConnector,args[1],args[2]);
     	system:println(message:getStringPayload(etcdResponse));
     }
  
