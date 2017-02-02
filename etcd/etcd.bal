@@ -1,5 +1,6 @@
 package org.wso2.ballerina.connectors;
 
+import ballerina.lang.array;
 import ballerina.lang.json;
 import ballerina.lang.message;
 import ballerina.lang.string;
@@ -8,86 +9,96 @@ import ballerina.net.http;
 import ballerina.net.uri;
 import ballerina.util;
 
-connector etcd (string etcdURL) {
+connector etcd (string etcdURL, string username, string password, string apiVersion) {
 
     http:HTTPConnector etcdEP = new http:HTTPConnector("http://127.0.0.1:2379");
+    string encodedBasicAuthHeaderValue;
+    string path;
+    message request;
+    message response;
     //http:HTTPConnector etcdEP = new http:HTTPConnector(etcdURL);
 
-    // get value from the etcd for a given key
     action getValue(etcd t, string key) (message) {
 
-        string path;
-        message request;
-        message response;
-
-	path = "/v2/keys/" + key;
+	path = "/" + apiVersion + "/keys/" + key;
         response = http:HTTPConnector.get(etcdEP, path, request);
         return response;
     }
 
-    // add key/value to the etcd
-    action setKeyValue(etcd t, string key, string value) (message) {
+    action setKeyValue(etcd t, string key, string value, string ttl) (message) {
 	
-	string path;
-	message request;
-	message response;
+
+	if ((string:length(username) > 0) && (string:length(password) > 0) ){
+	    encodedBasicAuthHeaderValue = util:base64encode(username + ":" + password);
+	    message:setHeader(request, "Authorization", "Basic " + encodedBasicAuthHeaderValue);
+	}
 
 	message:setStringPayload(request, "value=" + value);
 	message:setHeader(request, "Content-Type", "application/x-www-form-urlencoded");
-	path = "/v2/keys/" + key;
+	path = "/" + apiVersion + "/keys/" + key;
 	response = http:HTTPConnector.put(etcdEP, path, request);
 	return response;
     }
 
-    // update value for a given key
     action updateValue(etcd t, string key, string value) (message) {
 
-	string path;
-	message request;
-	message response;
+	if ((string:length(username) > 0) && (string:length(password) > 0) ){
+	    encodedBasicAuthHeaderValue = util:base64encode(username + ":" + password);
+	    message:setHeader(request, "Authorization", "Basic " + encodedBasicAuthHeaderValue);
+	}
 
 	message:setStringPayload(request, "value=" + value);
 	message:setHeader(request, "Content-Type", "application/x-www-form-urlencoded");
-	path = "/v2/keys/" + key;
+	path = "/" + apiVersion + "/keys/" + key;
 	response = http:HTTPConnector.put(etcdEP, path, request);
 	return response;
     }
 
-    // delete a key from etcd
     action deleteKey(etcd t, string key) (message) {
 
-	string path;
-	message request;
-	message response;
+	if ((string:length(username) > 0) && (string:length(password) > 0) ){
+	    encodedBasicAuthHeaderValue = util:base64encode(username + ":" + password);
+	    message:setHeader(request, "Authorization", "Basic " + encodedBasicAuthHeaderValue);
+	}
 
-	path = "/v2/keys/" + key;
+	path = "/" + apiVersion + "/keys/" + key;
 	response = http:HTTPConnector.delete(etcdEP, path, request);
 	return response;
      }
 
-    // create a directory
     action createDir(etcd t, string dir) (message) {
 
-	string path;
-	message request;
-	message response;
+	if ((string:length(username) > 0) && (string:length(password) > 0) ){
+	    encodedBasicAuthHeaderValue = util:base64encode(username + ":" + password);
+	    message:setHeader(request, "Authorization", "Basic " + encodedBasicAuthHeaderValue);
+	}
 
-	message:setStringPayload(request, "dir=true");
-	message:setHeader(request, "Content-Type", "application/x-www-form-urlencoded");
-	path = "/v2/keys/" + dir;
+	path = "/" + apiVersion + "/keys/" + dir;
 	response = http:HTTPConnector.put(etcdEP, path, request);
 	return response;
     }
 
-    // listing a directory
-    action listDir(etcd t, string dir) (message) {
+    action listDir(etcd t, string dir, string recursive) (message) {
 
-	string path;
-	message request;
-	message response;
+	if ((string:length(username) > 0) && (string:length(password) > 0) ){
+	    encodedBasicAuthHeaderValue = util:base64encode(username + ":" + password);
+	    message:setHeader(request, "Authorization", "Basic " + encodedBasicAuthHeaderValue);
+	}
 
-	path = "/v2/keys" + dir;
+	path = "/" + apiVersion + "/keys" + dir + "?" + recursive;
         response = http:HTTPConnector.get(etcdEP, path, request);
+	return response;
+    }
+    
+    action deleteDir(etcd t, string dir, string recursive) (message) {
+
+	if ((string:length(username) > 0) && (string:length(password) > 0) ){
+	    encodedBasicAuthHeaderValue = util:base64encode(username + ":" + password);
+	    message:setHeader(request, "Authorization", "Basic " + encodedBasicAuthHeaderValue);
+	}
+
+	path = "/" + apiVersion + "/keys" + dir + "?" + recursive;
+        response = http:HTTPConnector.delete(etcdEP, path, request);
 	return response;
     }
 
@@ -96,16 +107,18 @@ connector etcd (string etcdURL) {
 
 function main (string[] args) {
 
-    connectors:etcd etcdConnector = new connectors:etcd("http://127.0.0.1:2379");
+    connectors:etcd etcdConnector = new connectors:etcd("http://127.0.0.1:2379", "root", "password", "v2");
     message etcdResponse;
-    json etcdJSONResponse;
+    int ln; 
 
     // add key/value to the etcd
     if (args[0] == "setKeyValue"){
 
-    	etcdResponse = connectors:etcd.setKeyValue(etcdConnector,args[1],args[2]);
-    	etcdJSONResponse = message:getJsonPayload(etcdResponse);
-    	//system:println(json:toString(etcdJSONResponse));
+	if (array:length(args) < 4 ){
+		args[3] = "null";
+	}
+
+    	etcdResponse = connectors:etcd.setKeyValue(etcdConnector,args[1],args[2],args[3]);
     	system:println(message:getStringPayload(etcdResponse));
     }
  
@@ -113,39 +126,42 @@ function main (string[] args) {
     if (args[0] == "getValue"){
     
     	etcdResponse = connectors:etcd.getValue(etcdConnector,args[1]);
-    	etcdJSONResponse = message:getJsonPayload(etcdResponse);
-    	system:println(json:toString(etcdJSONResponse));
+    	system:println(message:getStringPayload(etcdResponse));
     }
     
     // update a value for given key
     if (args[0] == "updateValue"){
     
     	etcdResponse = connectors:etcd.updateValue(etcdConnector,args[1],args[2]);
-    	etcdJSONResponse = message:getJsonPayload(etcdResponse);
-    	system:println(json:toString(etcdJSONResponse));
+    	system:println(message:getStringPayload(etcdResponse));
     }
 
     // delete a key from etcd
     if (args[0] == "deleteKey"){
     
     	etcdResponse = connectors:etcd.deleteKey(etcdConnector,args[1]);
-    	etcdJSONResponse = message:getJsonPayload(etcdResponse);
-    	system:println(json:toString(etcdJSONResponse));
+    	system:println(message:getStringPayload(etcdResponse));
     }
 
     // create directory
     if (args[0] == "createDir"){
     
     	etcdResponse = connectors:etcd.createDir(etcdConnector,args[1]);
-    	etcdJSONResponse = message:getJsonPayload(etcdResponse);
-    	system:println(json:toString(etcdJSONResponse));
+    	system:println(message:getStringPayload(etcdResponse));
     }
     
+    // list directory
     if (args[0] == "listDir"){
+  
+    	etcdResponse = connectors:etcd.listDir(etcdConnector,args[1],args[2]);
+    	system:println(message:getStringPayload(etcdResponse));
+    }
     
-    	etcdResponse = connectors:etcd.listDir(etcdConnector,args[1]);
-    	etcdJSONResponse = message:getJsonPayload(etcdResponse);
-    	system:println(json:toString(etcdJSONResponse));
+    // delete directory
+    if (args[0] == "deleteDir"){
+  
+    	etcdResponse = connectors:etcd.deleteDir(etcdConnector,args[1],args[2]);
+    	system:println(message:getStringPayload(etcdResponse));
     }
 
 
