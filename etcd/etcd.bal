@@ -11,12 +11,13 @@ import ballerina.util;
 
 connector etcd (string etcdURL, string username, string password, string apiVersion) {
 
+    // TODO: pass etcdURL to http:HTTPConnector after fix the limitation
     http:HTTPConnector etcdEP = new http:HTTPConnector("http://127.0.0.1:2379");
+    //http:HTTPConnector etcdEP = new http:HTTPConnector(etcdURL);
     string encodedBasicAuthHeaderValue;
     string path;
     message request;
     message response;
-    //http:HTTPConnector etcdEP = new http:HTTPConnector(etcdURL);
 
     action getValue(etcd t, string key) (message) {
 
