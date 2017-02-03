@@ -3,13 +3,13 @@ Description
 This is etcd connector with the following actions. And the actions are being invoked in a ballerina main function.
 
 
-    * setKeyValue 	: Store key/value pair
-    * getValue		   : Get the value for given key
-    * updateValue	   : Update the value for given key
-    * deleteKey		: Delete the key
-    * createDir		: Create a directory
-    * listDir		   : List directory (recursive lising also supported)
-    * deleteDir		: Delete directory (recoursive delete also supported)
+    * setKeyValue : Store key/value pair
+    * getValue    : Get the value for given key
+    * updateValue : Update the value for given key
+    * deleteKey   : Delete the key
+    * createDir   : Create a directory
+    * listDir     : List directory (recursive lising also supported)
+    * deleteDir   : Delete directory (recoursive delete also supported)
 
 Prerequisites
 =============
