@@ -20,14 +20,12 @@ connector etcd (string etcdURL, string username, string password, string apiVers
     message response;
 
     action getValue(etcd t, string key) (message) {
-
 	path = "/" + apiVersion + "/keys/" + key;
         response = http:HTTPConnector.get(etcdEP, path, request);
         return response;
     }
 
     action setKeyValue(etcd t, string key, string value) (message) {
-
 	if ((string:length(username) > 0) && (string:length(password) > 0) ){
 	    encodedBasicAuthHeaderValue = util:base64encode(username + ":" + password);
 	    message:setHeader(request, "Authorization", "Basic " + encodedBasicAuthHeaderValue);
@@ -40,7 +38,6 @@ connector etcd (string etcdURL, string username, string password, string apiVers
     }
 
     action updateValue(etcd t, string key, string value) (message) {
-
 	if ((string:length(username) > 0) && (string:length(password) > 0) ){
 	    encodedBasicAuthHeaderValue = util:base64encode(username + ":" + password);
 	    message:setHeader(request, "Authorization", "Basic " + encodedBasicAuthHeaderValue);
@@ -53,7 +50,6 @@ connector etcd (string etcdURL, string username, string password, string apiVers
     }
 
     action deleteKey(etcd t, string key) (message) {
-
 	if ((string:length(username) > 0) && (string:length(password) > 0) ){
 	    encodedBasicAuthHeaderValue = util:base64encode(username + ":" + password);
 	    message:setHeader(request, "Authorization", "Basic " + encodedBasicAuthHeaderValue);
@@ -64,7 +60,6 @@ connector etcd (string etcdURL, string username, string password, string apiVers
      }
 
     action createDir(etcd t, string dir) (message) {
-
 	if ((string:length(username) > 0) && (string:length(password) > 0) ){
 	    encodedBasicAuthHeaderValue = util:base64encode(username + ":" + password);
 	    message:setHeader(request, "Authorization", "Basic " + encodedBasicAuthHeaderValue);
@@ -75,7 +70,6 @@ connector etcd (string etcdURL, string username, string password, string apiVers
     }
 
     action listDir(etcd t, string dir, string recursive) (message) {
-
 	if ((string:length(username) > 0) && (string:length(password) > 0) ){
 	    encodedBasicAuthHeaderValue = util:base64encode(username + ":" + password);
 	    message:setHeader(request, "Authorization", "Basic " + encodedBasicAuthHeaderValue);
@@ -86,7 +80,6 @@ connector etcd (string etcdURL, string username, string password, string apiVers
     }
     
     action deleteDir(etcd t, string dir, string recursive) (message) {
-
 	if ((string:length(username) > 0) && (string:length(password) > 0) ){
 	    encodedBasicAuthHeaderValue = util:base64encode(username + ":" + password);
 	    message:setHeader(request, "Authorization", "Basic " + encodedBasicAuthHeaderValue);
