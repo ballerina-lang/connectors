@@ -211,7 +211,6 @@ function constructRequestHeaders(message request, string httpMethod, string serv
                 uri:encode(signature) + "\",oauth_token=\"" + uri:encode(accessToken) + "\"";
 
     message:setHeader(request, "Authorization", string:unescape(oauthHeaderString));
-    message:setHeader(request, "User-Agent", "Ballerina-1.0");
 }
 
 function main (string[] args) {
