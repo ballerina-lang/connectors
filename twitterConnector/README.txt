@@ -17,7 +17,7 @@ IMPORTANT: This access token can be used to make API requests on your own accoun
 How to run this sample
 ======================
 - Place the twitterConnector into {BALLERINA_HOME}/samples.
-- To run the following commands to execute the relevant action.
+- Run the following commands to execute the relevant action.
   1. tweet:
     bin$ ./ballerina run ../samples/twitterConnector/twitterConnector.bal tweet <consumerKey> <consumerSecret> <accessToken> <accessTokenSecret> <message>
 
