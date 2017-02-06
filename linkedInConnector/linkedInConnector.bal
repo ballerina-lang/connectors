@@ -22,7 +22,6 @@ connector Linkedin (string accessToken) {
 
         format = validateFormat(format);
         getProfileInfoPath = "/v1/people/~?format=" + format;
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
         response = http:HTTPConnector.get(linkedInEP, getProfileInfoPath, request);
 
@@ -38,7 +37,6 @@ connector Linkedin (string accessToken) {
 
         format = validateFormat(format);
         getProfileInfoPath = "/v1/companies/" + company_id + "?format=" + format;
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
         response = http:HTTPConnector.get(linkedInEP, getProfileInfoPath, request);
 
@@ -54,7 +52,6 @@ connector Linkedin (string accessToken) {
 
         format = validateFormat(format);
         getProfileInfoPath = "/v1/companies/" + company_id + "/is-company-share-enabled?format=" + format;
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
         response = http:HTTPConnector.get(linkedInEP, getProfileInfoPath, request);
 
@@ -70,7 +67,6 @@ connector Linkedin (string accessToken) {
 
         format = validateFormat(format);
         getProfileInfoPath = "/v1/companies/" + company_id + "/relation-to-viewer/is-company-share-enabled?format=" + format;
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
         response = http:HTTPConnector.get(linkedInEP, getProfileInfoPath, request);
 
@@ -85,7 +81,6 @@ connector Linkedin (string accessToken) {
         message response;
 
         profileSharePath = "/v1/people/~/shares?format=json";
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Content-Type", "application/json");
         message:setHeader(request, "x-li-format", "json");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
@@ -103,7 +98,6 @@ connector Linkedin (string accessToken) {
         message response;
 
         profileSharePath = "/v1/people/~/shares?format=json";
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Content-Type", "application/xml");
         message:setHeader(request, "x-li-format", "xml");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
@@ -121,7 +115,6 @@ connector Linkedin (string accessToken) {
         message response;
 
         companySharePath = "/v1/companies/" + company_id + "/shares?format=json";
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Content-Type", "application/json");
         message:setHeader(request, "x-li-format", "json");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
@@ -139,7 +132,6 @@ connector Linkedin (string accessToken) {
         message response;
 
         companySharePath = "/v1/companies/" + company_id + "/shares?format=json";
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Content-Type", "application/xml");
         message:setHeader(request, "x-li-format", "xml");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);

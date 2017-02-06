@@ -20,7 +20,6 @@ connector Medium (string accessToken) {
         message request;
         message response;
         getProfileInfoPath = "/v1/me";
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
         response = http:HTTPConnector.get(mediumEP, getProfileInfoPath, request);
 
@@ -35,7 +34,6 @@ connector Medium (string accessToken) {
         message response;
 
         getContributorsPath = "/v1/publications/" + publication_id + "/contributors";
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
         response = http:HTTPConnector.get(mediumEP, getContributorsPath, request);
 
@@ -50,7 +48,6 @@ connector Medium (string accessToken) {
         message response;
 
         getPublicationsPath = "/v1/users/" + user_id + "/publications";
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
         response = http:HTTPConnector.get(mediumEP, getPublicationsPath, request);
 
@@ -65,7 +62,6 @@ connector Medium (string accessToken) {
         message response;
 
         createProfilePostPath = "/v1/users/" + user_id + "/posts";
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Content-Type", "application/json");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
         message:setJsonPayload(request, payload);
@@ -82,7 +78,6 @@ connector Medium (string accessToken) {
         message response;
 
         createPublicationPostPath = "/v1/publications/" + publication_id + "/posts";
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Content-Type", "application/json");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
         message:setJsonPayload(request, payload);
