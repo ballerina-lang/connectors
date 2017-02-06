@@ -17,18 +17,18 @@ connector Twitter (string consumerKey, string consumerSecret, string accessToken
     action tweet(Twitter t, string msg) (message) {
 
         string tweetPath;
-        string serviceEP;
+        string urlParams;
         message request;
         message response;
         map parameters;
 
         tweetPath = "/1.1/statuses/update.json";
-        serviceEP = "https://api.twitter.com" + tweetPath;
         parameters["status"] = msg;
-        tweetPath = tweetPath + "?status=" + uri:encode(msg);
-        constructOAuthHeader(request, "POST", serviceEP, consumerKey, consumerSecret, accessToken, accessTokenSecret, parameters);
+        urlParams = "status=" + uri:encode(msg);
 
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
+        constructRequestHeaders(request, "POST", tweetPath, consumerKey, consumerSecret, accessToken,
+                            accessTokenSecret, parameters);
+        tweetPath = tweetPath + "?" + urlParams;
 
         response = http:HTTPConnector.post(tweeterEP, tweetPath, request);
 
@@ -38,16 +38,13 @@ connector Twitter (string consumerKey, string consumerSecret, string accessToken
     action reTweet(Twitter t, string tweetId) (message) {
 
         string tweetPath;
-        string serviceEP;
         message request;
         message response;
         map parameters;
 
         tweetPath = "/1.1/statuses/retweet/" + tweetId + ".json";
-        serviceEP = "https://api.twitter.com" + tweetPath;
-        constructOAuthHeader(request, "POST", serviceEP, consumerKey, consumerSecret, accessToken, accessTokenSecret, parameters);
-
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
+        constructRequestHeaders(request, "POST", tweetPath, consumerKey, consumerSecret, accessToken,
+                            accessTokenSecret, parameters);
 
         response = http:HTTPConnector.post(tweeterEP, tweetPath, request);
 
@@ -57,16 +54,13 @@ connector Twitter (string consumerKey, string consumerSecret, string accessToken
     action unReTweet(Twitter t, string tweetId) (message) {
 
         string tweetPath;
-        string serviceEP;
         message request;
         message response;
         map parameters;
 
         tweetPath = "/1.1/statuses/unretweet/" + tweetId + ".json";
-        serviceEP = "https://api.twitter.com" + tweetPath;
-        constructOAuthHeader(request, "POST", serviceEP, consumerKey, consumerSecret, accessToken, accessTokenSecret, parameters);
-
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
+        constructRequestHeaders(request, "POST", tweetPath, consumerKey, consumerSecret, accessToken,
+                            accessTokenSecret, parameters);
 
         response = http:HTTPConnector.post(tweeterEP, tweetPath, request);
 
@@ -76,18 +70,17 @@ connector Twitter (string consumerKey, string consumerSecret, string accessToken
     action search(Twitter t, string query) (message) {
 
         string tweetPath;
-        string serviceEP;
+        string urlParams;
         message request;
         message response;
         map parameters;
 
         tweetPath = "/1.1/search/tweets.json";
-        serviceEP = "https://api.twitter.com" + tweetPath;
         parameters["q"] = query;
-        tweetPath = tweetPath + "?q=" + uri:encode(query);
-        constructOAuthHeader(request, "GET", serviceEP, consumerKey, consumerSecret, accessToken, accessTokenSecret, parameters);
-
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
+        urlParams = "q=" + uri:encode(query);
+        constructRequestHeaders(request, "GET", tweetPath, consumerKey, consumerSecret, accessToken,
+                            accessTokenSecret, parameters);
+        tweetPath = tweetPath + "?" + urlParams;
 
         response = http:HTTPConnector.get(tweeterEP, tweetPath, request);
 
@@ -97,18 +90,17 @@ connector Twitter (string consumerKey, string consumerSecret, string accessToken
     action showStatus(Twitter t, string tweetId) (message) {
 
         string tweetPath;
-        string serviceEP;
+        string urlParams;
         message request;
         message response;
         map parameters;
 
         tweetPath = "/1.1/statuses/show.json";
-        serviceEP = "https://api.twitter.com" + tweetPath;
         parameters["id"] = tweetId;
-        tweetPath = tweetPath + "?id=" + tweetId;
-        constructOAuthHeader(request, "GET", serviceEP, consumerKey, consumerSecret, accessToken, accessTokenSecret, parameters);
-
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
+        urlParams = "id=" + tweetId;
+        constructRequestHeaders(request, "GET", tweetPath, consumerKey, consumerSecret, accessToken,
+                            accessTokenSecret, parameters);
+        tweetPath = tweetPath + "?" + urlParams;
 
         response = http:HTTPConnector.get(tweeterEP, tweetPath, request);
 
@@ -118,18 +110,13 @@ connector Twitter (string consumerKey, string consumerSecret, string accessToken
     action destroyStatus(Twitter t, string tweetId) (message) {
 
         string tweetPath;
-        string serviceEP;
         message request;
         message response;
         map parameters;
 
         tweetPath = "/1.1/statuses/destroy/" + tweetId + ".json";
-        serviceEP = "https://api.twitter.com" + tweetPath;
-        parameters["id"] = tweetId;
-        tweetPath = tweetPath + "?id=" + tweetId;
-        constructOAuthHeader(request, "POST", serviceEP, consumerKey, consumerSecret, accessToken, accessTokenSecret, parameters);
-
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
+        constructRequestHeaders(request, "POST", tweetPath, consumerKey, consumerSecret, accessToken,
+                        accessTokenSecret, parameters);
 
         response = http:HTTPConnector.post(tweeterEP, tweetPath, request);
 
@@ -139,20 +126,19 @@ connector Twitter (string consumerKey, string consumerSecret, string accessToken
     action getClosestTrendLocations(Twitter t, string lat, string long) (message) {
 
         string tweetPath;
-        string serviceEP;
+        string urlParams;
         message request;
         message response;
         map parameters;
 
         tweetPath = "/1.1/trends/closest.json";
-        serviceEP = "https://api.twitter.com" + tweetPath;
         parameters["lat"] = lat;
-        tweetPath = tweetPath + "?lat=" + lat;
+        urlParams = urlParams + "&lat=" + lat;
         parameters["long"] = long;
-        tweetPath = tweetPath + "&long=" + long;
-        constructOAuthHeader(request, "GET", serviceEP, consumerKey, consumerSecret, accessToken, accessTokenSecret, parameters);
-
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
+        urlParams = urlParams + "&long=" + long;
+        constructRequestHeaders(request, "GET", tweetPath, consumerKey, consumerSecret, accessToken,
+                            accessTokenSecret, parameters);
+        tweetPath = tweetPath + "?" + string:subString(urlParams, 1, string:length(urlParams));
 
         response = http:HTTPConnector.get(tweeterEP, tweetPath, request);
 
@@ -162,18 +148,17 @@ connector Twitter (string consumerKey, string consumerSecret, string accessToken
     action getTopTrendsByPlace(Twitter t, string locationId) (message) {
 
         string tweetPath;
-        string serviceEP;
+        string urlParams;
         message request;
         message response;
         map parameters;
 
         tweetPath = "/1.1/trends/place.json";
-        serviceEP = "https://api.twitter.com" + tweetPath;
         parameters["id"] = locationId;
-        tweetPath = tweetPath + "?id=" + locationId;
-        constructOAuthHeader(request, "GET", serviceEP, consumerKey, consumerSecret, accessToken, accessTokenSecret, parameters);
-
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
+        urlParams = "id=" + locationId;
+        constructRequestHeaders(request, "GET", tweetPath, consumerKey, consumerSecret, accessToken,
+                            accessTokenSecret, parameters);
+        tweetPath = tweetPath + "?" + urlParams;
 
         response = http:HTTPConnector.get(tweeterEP, tweetPath, request);
 
@@ -181,7 +166,7 @@ connector Twitter (string consumerKey, string consumerSecret, string accessToken
     }
 }
 
-function constructOAuthHeader(message request, string httpMethod, string serviceEP, string consumerKey,
+function constructRequestHeaders(message request, string httpMethod, string serviceEP, string consumerKey,
                             string consumerSecret, string accessToken, string accessTokenSecret, map parameters) {
     int index;
     string paramStr;
@@ -196,8 +181,10 @@ function constructOAuthHeader(message request, string httpMethod, string service
     string key;
     string value;
 
+    serviceEP = "https://api.twitter.com" + serviceEP;
     timeStamp = string:valueOf(system:epochTime());
     nonceString =  util:getRandomString();
+
     parameters["oauth_consumer_key"] = consumerKey;
     parameters["oauth_consumer_key"] = consumerKey;
     parameters["oauth_nonce"] = nonceString;
@@ -216,7 +203,7 @@ function constructOAuthHeader(message request, string httpMethod, string service
     }
     paramStr = string:subString(paramStr, 0, string:length(paramStr)-1);
     baseString = httpMethod + "&" + uri:encode(serviceEP) + "&" + uri:encode(paramStr);
-    keyStr = uri:encode(consumerSecret)+"&"+uri:encode(accessTokenSecret);
+    keyStr = uri:encode(consumerSecret) + "&" + uri:encode(accessTokenSecret);
     signature = util:getHmac(baseString, keyStr, "SHA1");
     oauthHeaderString = "OAuth oauth_consumer_key=\"" + consumerKey +
                 "\",oauth_signature_method=\"HMAC-SHA1\",oauth_timestamp=\"" + timeStamp +
@@ -224,17 +211,68 @@ function constructOAuthHeader(message request, string httpMethod, string service
                 uri:encode(signature) + "\",oauth_token=\"" + uri:encode(accessToken) + "\"";
 
     message:setHeader(request, "Authorization", string:unescape(oauthHeaderString));
+    message:setHeader(request, "User-Agent", "Ballerina-1.0");
 }
 
 function main (string[] args) {
 
-    connectors:Twitter twitterConnector = new connectors:Twitter(args[0], args[1], args[2], args[3]);
-
+    connectors:Twitter twitterConnector = new connectors:Twitter(args[1], args[2], args[3], args[4]);
     message tweetResponse;
     json tweetJSONResponse;
+    if (args[0] == "tweet"){
+      tweetResponse = connectors:Twitter.tweet(twitterConnector, args[5]);
 
-    tweetResponse = connectors:Twitter.getTopTrendsByPlace(twitterConnector, args[4]);
+      tweetJSONResponse = message:getJsonPayload(tweetResponse);
+      system:println(json:toString(tweetJSONResponse));
+    }
 
-    tweetJSONResponse = message:getJsonPayload(tweetResponse);
-    system:println(json:toString(tweetJSONResponse));
+    if (args[0] == "search"){
+      tweetResponse = connectors:Twitter.search(twitterConnector, args[5]);
+
+      tweetJSONResponse = message:getJsonPayload(tweetResponse);
+      system:println(json:toString(tweetJSONResponse));
+    }
+
+    if (args[0] == "reTweet"){
+      tweetResponse = connectors:Twitter.reTweet(twitterConnector, args[5]);
+
+      tweetJSONResponse = message:getJsonPayload(tweetResponse);
+      system:println(json:toString(tweetJSONResponse));
+    }
+
+    if (args[0] == "unReTweet"){
+      tweetResponse = connectors:Twitter.unReTweet(twitterConnector, args[5]);
+
+      tweetJSONResponse = message:getJsonPayload(tweetResponse);
+      system:println(json:toString(tweetJSONResponse));
+    }
+
+    if (args[0] == "showStatus"){
+      tweetResponse = connectors:Twitter.showStatus(twitterConnector, args[5]);
+
+      tweetJSONResponse = message:getJsonPayload(tweetResponse);
+      system:println(json:toString(tweetJSONResponse));
+    }
+
+    if (args[0] == "destroyStatus"){
+      tweetResponse = connectors:Twitter.destroyStatus(twitterConnector, args[5]);
+
+      tweetJSONResponse = message:getJsonPayload(tweetResponse);
+      system:println(json:toString(tweetJSONResponse));
+    }
+
+    if (args[0] == "getClosestTrendLocations"){
+      tweetResponse = connectors:Twitter.getClosestTrendLocations(twitterConnector, args[5], args[6]);
+
+      tweetJSONResponse = message:getJsonPayload(tweetResponse);
+      system:println(json:toString(tweetJSONResponse));
+    }
+
+    if (args[0] == "getTopTrendsByPlace"){
+      tweetResponse = connectors:Twitter.getTopTrendsByPlace(twitterConnector, args[5]);
+
+      tweetJSONResponse = message:getJsonPayload(tweetResponse);
+      system:println(json:toString(tweetJSONResponse));
+    }
+
 }
