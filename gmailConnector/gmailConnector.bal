@@ -20,7 +20,6 @@ connector Gmail (string userId, string accessToken) {
 
         getProfilePath = "/v1/users/" + userId + "/profile";
 
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
 
         response = http:HTTPConnector.get(gmailEP, getProfilePath, request);
@@ -78,7 +77,6 @@ connector Gmail (string userId, string accessToken) {
 
         message:setJsonPayload(request, createDraftRequest);
 
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Content-Type", "Application/json");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
 
@@ -137,7 +135,6 @@ connector Gmail (string userId, string accessToken) {
 
         message:setJsonPayload(request, updateDraftRequest);
 
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Content-Type", "Application/json");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
 
@@ -158,7 +155,6 @@ connector Gmail (string userId, string accessToken) {
             readDraftPath = readDraftPath + "?format=" + format;
         }
 
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
 
         response = http:HTTPConnector.get(gmailEP, readDraftPath, request);
@@ -174,7 +170,6 @@ connector Gmail (string userId, string accessToken) {
 
         listDraftPath = "/v1/users/" + userId + "/drafts?includeSpamTrash=" + includeSpamTrash + "&maxResults=" + maxResults + "&pageToken=" + pageToken + "&q=" + q;
 
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
 
         response = http:HTTPConnector.get(gmailEP, listDraftPath, request);
@@ -190,7 +185,6 @@ connector Gmail (string userId, string accessToken) {
 
         deleteDraftPath = "/v1/users/" + userId + "/drafts/" + draftId;
 
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
 
         response = http:HTTPConnector.delete(gmailEP, deleteDraftPath, request);
@@ -218,7 +212,6 @@ connector Gmail (string userId, string accessToken) {
              listHistoryPath = listHistoryPath + "&pageToken=" + pageToken;
         }
 
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
 
         response = http:HTTPConnector.get(gmailEP, listHistoryPath, request);
@@ -257,7 +250,6 @@ connector Gmail (string userId, string accessToken) {
 
         createLabelPath = "/v1/users/" + userId + "/labels";
 
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Content-Type", "Application/json");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
 
@@ -276,7 +268,6 @@ connector Gmail (string userId, string accessToken) {
 
         deleteLabelPath = "/v1/users/" + userId + "/labels/" + labelId;
 
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
 
         response = http:HTTPConnector.delete(gmailEP, deleteLabelPath, request);
@@ -292,7 +283,6 @@ connector Gmail (string userId, string accessToken) {
 
         listLabelPath = "/v1/users/" + userId + "/labels/";
 
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
 
         response = http:HTTPConnector.get(gmailEP, listLabelPath, request);
@@ -331,7 +321,6 @@ connector Gmail (string userId, string accessToken) {
 
         updateLabelPath = "/v1/users/" + userId + "/labels/" + labelId;
 
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Content-Type", "Application/json");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
 
@@ -350,7 +339,6 @@ connector Gmail (string userId, string accessToken) {
 
         readLabelPath = "/v1/users/" + userId + "/labels/" + labelId;
 
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
 
         response = http:HTTPConnector.get(gmailEP, readLabelPath, request);
@@ -371,7 +359,6 @@ connector Gmail (string userId, string accessToken) {
             readThreadPath = "/v1/users/" + userId + "/threads/" + threadId + "?format=" + format;
         }
 
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
 
         response = http:HTTPConnector.get(gmailEP, readThreadPath, request);
@@ -388,7 +375,6 @@ connector Gmail (string userId, string accessToken) {
 
         listThreadPath = "/v1/users/" + userId + "/threads?includeSpamTrash=" + includeSpamTrash + "&labelIds=" + labelIds + "&maxResults=" + maxResults + "&pageToken=" + pageToken + "&q=" + q;
 
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
 
         response = http:HTTPConnector.get(gmailEP, listThreadPath, request);
@@ -404,7 +390,6 @@ connector Gmail (string userId, string accessToken) {
 
         deleteThreadPath = "/v1/users/" + userId + "/threads/" + threadId;
 
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
 
         response = http:HTTPConnector.delete(gmailEP, deleteThreadPath, request);
@@ -420,7 +405,6 @@ connector Gmail (string userId, string accessToken) {
 
         trashThreadPath = "/v1/users/" + userId + "/threads/" + threadId + "/trash";
 
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
 
         http:setContentLength(request, 0);
@@ -437,7 +421,6 @@ connector Gmail (string userId, string accessToken) {
 
         unTrashThreadPath = "/v1/users/" + userId + "/threads/" + threadId + "/untrash";
 
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
 
         http:setContentLength(request, 0);
@@ -454,7 +437,6 @@ connector Gmail (string userId, string accessToken) {
 
         listMailPath = "/v1/users/" + userId + "/messages?includeSpamTrash=" + includeSpamTrash + "&labelIds=" + labelIds +"&maxResults=" + maxResults + "&pageToken=" + pageToken + "&q=" + q;
 
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
 
         response = http:HTTPConnector.get(gmailEP, listMailPath, request);
@@ -508,14 +490,10 @@ connector Gmail (string userId, string accessToken) {
         encodedRequest = util:base64encode(concatRequest);
         sendMailRequest = `{"raw": "${encodedRequest}"}`;
 
-        system:println(concatRequest);
-        system:println(encodedRequest);
-
         sendMailPath = "/v1/users/" + userId + "/messages/send";
 
         message:setJsonPayload(request, sendMailRequest);
 
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Content-Type", "Application/json");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
 
@@ -545,7 +523,7 @@ connector Gmail (string userId, string accessToken) {
 
         message:setJsonPayload(request, modifyExistingMessageRequest);
         message:setHeader(request, "Content-Type", "Application/json");
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
+
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
 
         response = http:HTTPConnector.post(gmailEP, modifyExistingMessagePath, request);
@@ -567,7 +545,6 @@ connector Gmail (string userId, string accessToken) {
         }
 
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
 
         response = http:HTTPConnector.get(gmailEP, readMailPath, request);
 
@@ -583,7 +560,6 @@ connector Gmail (string userId, string accessToken) {
         deleteMailPath = "/v1/users/" + userId + "/messages/" + messageId;
 
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
 
         response = http:HTTPConnector.delete(gmailEP, deleteMailPath, request);
 
@@ -598,7 +574,6 @@ connector Gmail (string userId, string accessToken) {
 
         trashMailPath = "/v1/users/" + userId + "/messages/" + messageId + "/trash";
 
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
 
         http:setContentLength(request, 0);
@@ -615,7 +590,6 @@ connector Gmail (string userId, string accessToken) {
 
         unTrashMailPath = "/v1/users/" + userId + "/messages/" + messageId + "/untrash";
 
-        message:setHeader(request, "User-Agent", "Ballerina-1.0");
         message:setHeader(request, "Authorization", "Bearer " + accessToken);
 
         http:setContentLength(request, 0);
@@ -627,11 +601,209 @@ connector Gmail (string userId, string accessToken) {
 
 function main (string[] args) {
 
-    connectors:Gmail gmailConnector = new connectors:Gmail(args[0], args[1]);
+    connectors:Gmail gmailConnector = new connectors:Gmail(args[1], args[2]);
 
-    message userProfileResponse;
-    json userProfileJSONResponse;
-    userProfileResponse = connectors:Gmail.getUserProfile(gmailConnector);
-    userProfileJSONResponse = message:getJsonPayload(userProfileResponse);
-    system:println(json:toString(userProfileJSONResponse));
+    message gmailResponse;
+    json gmailJSONResponse;
+    string deleteResponse;
+
+    if( args[0] == "getUserProfile") {
+
+    gmailResponse = connectors:Gmail.getUserProfile(gmailConnector);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    system:println(json:toString(gmailJSONResponse));
+    }
+
+    if( args[0] == "createDraft") {
+
+    gmailResponse = connectors:Gmail.createDraft(gmailConnector, args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10]);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    system:println(json:toString(gmailJSONResponse));
+    }
+
+    if( args[0] == "updateDraft") {
+
+    gmailResponse = connectors:Gmail.updateDraft(gmailConnector, args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10], args[11]);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    system:println(json:toString(gmailJSONResponse));
+    }
+
+    if( args[0] == "readDraft") {
+
+    gmailResponse = connectors:Gmail.readDraft(gmailConnector, args[3], args[4]);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    system:println(json:toString(gmailJSONResponse));
+    }
+
+    if( args[0] == "listDrafts") {
+
+    gmailResponse = connectors:Gmail.listDrafts(gmailConnector, args[3], args[4], args[5], args[6]);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    system:println(json:toString(gmailJSONResponse));
+    }
+
+    if( args[0] == "deleteDraft") {
+
+    gmailResponse = connectors:Gmail.deleteDraft(gmailConnector, args[3]);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    deleteResponse = json:toString(gmailJSONResponse);
+
+    if(deleteResponse == "null"){
+    system:println("Draft with id: " + args[3] + " deleted successfully.");
+    }
+    }
+
+    if( args[0] == "listHistory") {
+
+    gmailResponse = connectors:Gmail.listHistory(gmailConnector, args[3], args[4], args[5], args[6]);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    system:println(json:toString(gmailJSONResponse));
+    }
+
+    if( args[0] == "createLabel") {
+
+    gmailResponse = connectors:Gmail.createLabel(gmailConnector, args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10]);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    system:println(json:toString(gmailJSONResponse));
+    }
+
+    if( args[0] == "deleteLabel") {
+
+    gmailResponse = connectors:Gmail.deleteLabel(gmailConnector, args[3]);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    deleteResponse = json:toString(gmailJSONResponse);
+
+    if(deleteResponse == "null"){
+     system:println("Label with id: " + args[3] + " deleted successfully.");
+    }
+    }
+
+    if( args[0] == "listLabels") {
+
+    gmailResponse = connectors:Gmail.listLabels(gmailConnector);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    system:println(json:toString(gmailJSONResponse));
+    }
+
+    if( args[0] == "updateLabel") {
+
+    gmailResponse = connectors:Gmail.updateLabel(gmailConnector, args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10], args[11]);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    system:println(json:toString(gmailJSONResponse));
+    }
+
+    if( args[0] == "readLabel") {
+
+    gmailResponse = connectors:Gmail.readLabel(gmailConnector, args[3]);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    system:println(json:toString(gmailJSONResponse));
+    }
+
+    if( args[0] == "readThread") {
+
+    gmailResponse = connectors:Gmail.readThread(gmailConnector, args[3], args[4], args[5]);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    system:println(json:toString(gmailJSONResponse));
+    }
+
+    if( args[0] == "listThreads") {
+
+    gmailResponse = connectors:Gmail.listThreads(gmailConnector, args[3], args[4], args[5], args[6], args[7]);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    system:println(json:toString(gmailJSONResponse));
+    }
+
+    if( args[0] == "deleteThread") {
+
+    gmailResponse = connectors:Gmail.deleteThread(gmailConnector, args[3]);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    deleteResponse = json:toString(gmailJSONResponse);
+
+        if(deleteResponse == "null"){
+        system:println("Thread with id: " + args[3] + " deleted successfully.");
+        }
+    }
+
+    if( args[0] == "trashThread") {
+
+    gmailResponse = connectors:Gmail.trashThread(gmailConnector, args[3]);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    system:println(json:toString(gmailJSONResponse));
+    }
+
+    if( args[0] == "unTrashThread") {
+
+    gmailResponse = connectors:Gmail.unTrashThread(gmailConnector, args[3]);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    system:println(json:toString(gmailJSONResponse));
+    }
+
+    if( args[0] == "listMails") {
+
+    gmailResponse = connectors:Gmail.listMails(gmailConnector, args[3], args[4], args[5], args[6], args[7]);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    system:println(json:toString(gmailJSONResponse));
+    }
+
+    if( args[0] == "sendMail") {
+
+    gmailResponse = connectors:Gmail.sendMail(gmailConnector, args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10]);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    system:println(json:toString(gmailJSONResponse));
+    }
+
+    if( args[0] == "readMail") {
+
+    gmailResponse = connectors:Gmail.readMail(gmailConnector, args[3], args[4], args[5]);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    system:println(json:toString(gmailJSONResponse));
+    }
+
+    if( args[0] == "deleteMail") {
+
+    gmailResponse = connectors:Gmail.deleteMail(gmailConnector, args[3]);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    deleteResponse = json:toString(gmailJSONResponse);
+
+        if(deleteResponse == "null"){
+            system:println("Mail with id: " + args[3] + " deleted successfully.");
+        }
+    }
+
+    if( args[0] == "trashMail") {
+
+    gmailResponse = connectors:Gmail.trashMail(gmailConnector, args[3]);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    system:println(json:toString(gmailJSONResponse));
+    }
+
+    if( args[0] == "unTrashMail") {
+
+    gmailResponse = connectors:Gmail.unTrashMail(gmailConnector, args[3]);
+
+    gmailJSONResponse = message:getJsonPayload(gmailResponse);
+    system:println(json:toString(gmailJSONResponse));
+    }
 }
