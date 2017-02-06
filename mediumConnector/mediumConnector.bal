@@ -15,7 +15,6 @@ connector Medium (string accessToken) {
 
     action getProfileInfo(Medium t) (message) {
 
-        string oauthHeader;
         string getProfileInfoPath;
         message request;
         message response;
@@ -28,7 +27,6 @@ connector Medium (string accessToken) {
 
     action getContributors(Medium t, string publication_id) (message) {
 
-        string oauthHeader;
         string getContributorsPath;
         message request;
         message response;
@@ -42,7 +40,6 @@ connector Medium (string accessToken) {
 
     action getPublications(Medium t, string user_id) (message) {
 
-        string oauthHeader;
         string getPublicationsPath;
         message request;
         message response;
@@ -56,7 +53,6 @@ connector Medium (string accessToken) {
 
     action createProfilePost(Medium t, string user_id, json payload) (message) {
 
-        string oauthHeader;
         string createProfilePostPath;
         message request;
         message response;
@@ -72,7 +68,6 @@ connector Medium (string accessToken) {
 
     action createPublicationPost(Medium t, string publication_id, json payload) (message) {
 
-        string oauthHeader;
         string createPublicationPostPath;
         message request;
         message response;

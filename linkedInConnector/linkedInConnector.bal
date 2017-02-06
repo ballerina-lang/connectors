@@ -15,7 +15,6 @@ connector Linkedin (string accessToken) {
 
     action getProfileInfo(Linkedin t, string format) (message) {
 
-        string oauthHeader;
         string getProfileInfoPath;
         message request;
         message response;
@@ -30,7 +29,6 @@ connector Linkedin (string accessToken) {
 
     action getCompanyInfo(Linkedin t, string company_id, string format) (message) {
 
-        string oauthHeader;
         string getProfileInfoPath;
         message request;
         message response;
@@ -45,7 +43,6 @@ connector Linkedin (string accessToken) {
 
     action isCompanyShareEnabled(Linkedin t, string company_id, string format) (message) {
 
-        string oauthHeader;
         string getProfileInfoPath;
         message request;
         message response;
@@ -60,7 +57,6 @@ connector Linkedin (string accessToken) {
 
     action isMemberAdmin(Linkedin t, string company_id, string format) (message) {
 
-        string oauthHeader;
         string getProfileInfoPath;
         message request;
         message response;
@@ -75,7 +71,6 @@ connector Linkedin (string accessToken) {
 
     action profileShare(Linkedin t, json payload) (message) {
 
-        string oauthHeader;
         string profileSharePath;
         message request;
         message response;
@@ -92,7 +87,6 @@ connector Linkedin (string accessToken) {
 
     action profileShare(Linkedin t, xml payload) (message) {
 
-        string oauthHeader;
         string profileSharePath;
         message request;
         message response;
@@ -109,7 +103,6 @@ connector Linkedin (string accessToken) {
 
     action companyShare(Linkedin t, string company_id, json payload) (message) {
 
-        string oauthHeader;
         string companySharePath;
         message request;
         message response;
@@ -126,7 +119,6 @@ connector Linkedin (string accessToken) {
 
     action companyShare(Linkedin t, string company_id, xml payload) (message) {
 
-        string oauthHeader;
         string companySharePath;
         message request;
         message response;
