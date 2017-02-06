@@ -1,6 +1,6 @@
 Description
 ===========
-This is a sample Twitter connector. And the actions are being invoked with a ballerina main function.
+The Twitter connector allows you to access the Twitter REST API. And the actions are being invoked with a ballerina main function.
 
 Prerequisites
 =============
@@ -17,130 +17,27 @@ IMPORTANT: This access token can be used to make API requests on your own accoun
 How to run this sample
 ======================
 - Place the twitterConnector into {BALLERINA_HOME}/samples.
-- To run the actions in the Twitter connector update the main function with the relevant configuration given bellow with each action and run the command.
+- To run the following commands to execute the relevant action.
   1. tweet:
-    function main (string[] args) {
-
-        connectors:Twitter twitterConnector = new connectors:Twitter(args[0], args[1], args[2], args[3]);
-
-        message tweetResponse;
-        json tweetJSONResponse;
-
-        tweetResponse = connectors:Twitter.tweet(twitterConnector, args[4]);
-
-        tweetJSONResponse = message:getJsonPayload(tweetResponse);
-        system:println(json:toString(tweetJSONResponse));
-    }
-
-    bin$ ./ballerina run ../samples/twitterConnector/twitterConnector.bal <consumerKey> <consumerSecret> <accessToken> <accessTokenSecret> <message>
+    bin$ ./ballerina run ../samples/twitterConnector/twitterConnector.bal tweet <consumerKey> <consumerSecret> <accessToken> <accessTokenSecret> <message>
 
   2. search:
-    function main (string[] args) {
-
-        connectors:Twitter twitterConnector = new connectors:Twitter(args[0], args[1], args[2], args[3]);
-
-        message tweetResponse;
-        json tweetJSONResponse;
-
-        tweetResponse = connectors:Twitter.search(twitterConnector, args[4]);
-
-        tweetJSONResponse = message:getJsonPayload(tweetResponse);
-        system:println(json:toString(tweetJSONResponse));
-    }
-
-    bin$ ./ballerina run ../samples/twitterConnector/twitterConnector.bal <consumerKey> <consumerSecret> <accessToken> <accessTokenSecret> <query>
+    bin$ ./ballerina run ../samples/twitterConnector/twitterConnector.bal search <consumerKey> <consumerSecret> <accessToken> <accessTokenSecret> <query>
 
   3. reTweet:
-    function main (string[] args) {
-
-        connectors:Twitter twitterConnector = new connectors:Twitter(args[0], args[1], args[2], args[3]);
-
-        message tweetResponse;
-        json tweetJSONResponse;
-
-        tweetResponse = connectors:Twitter.reTweet(twitterConnector, args[4]);
-
-        tweetJSONResponse = message:getJsonPayload(tweetResponse);
-        system:println(json:toString(tweetJSONResponse));
-    }
-
-    bin$ ./ballerina run ../samples/twitterConnector/twitterConnector.bal <consumerKey> <consumerSecret> <accessToken> <accessTokenSecret> <tweetId>
+    bin$ ./ballerina run ../samples/twitterConnector/twitterConnector.bal reTweet <consumerKey> <consumerSecret> <accessToken> <accessTokenSecret> <tweetId>
 
   4. unReTweet:
-    function main (string[] args) {
-
-        connectors:Twitter twitterConnector = new connectors:Twitter(args[0], args[1], args[2], args[3]);
-
-        message tweetResponse;
-        json tweetJSONResponse;
-
-        tweetResponse = connectors:Twitter.unReTweet(twitterConnector, args[4]);
-
-        tweetJSONResponse = message:getJsonPayload(tweetResponse);
-        system:println(json:toString(tweetJSONResponse));
-    }
-
-    bin$ ./ballerina run ../samples/twitterConnector/twitterConnector.bal <consumerKey> <consumerSecret> <accessToken> <accessTokenSecret> <tweetId>
+    bin$ ./ballerina run ../samples/twitterConnector/twitterConnector.bal unReTweet <consumerKey> <consumerSecret> <accessToken> <accessTokenSecret> <tweetId>
 
   5. showStatus:
-    function main (string[] args) {
-
-         message tweetResponse;
-            json tweetJSONResponse;
-
-            tweetResponse = connectors:Twitter.showStatus(twitterConnector, args[4]);
-
-            tweetJSONResponse = message:getJsonPayload(tweetResponse);
-            system:println(json:toString(tweetJSONResponse));
-    }
-
-    bin$ ./ballerina run ../samples/twitterConnector/twitterConnector.bal <consumerKey> <consumerSecret> <accessToken> <accessTokenSecret> <tweetId>
+    bin$ ./ballerina run ../samples/twitterConnector/twitterConnector.bal showStatus <consumerKey> <consumerSecret> <accessToken> <accessTokenSecret> <tweetId>
 
   6. destroyStatus:
-    function main (string[] args) {
-
-        connectors:Twitter twitterConnector = new connectors:Twitter(args[0], args[1], args[2], args[3]);
-
-        message tweetResponse;
-        json tweetJSONResponse;
-
-        tweetResponse = connectors:Twitter.destroyStatus(twitterConnector, args[4]);
-
-        tweetJSONResponse = message:getJsonPayload(tweetResponse);
-        system:println(json:toString(tweetJSONResponse));
-    }
-
-    bin$ ./ballerina run ../samples/twitterConnector/twitterConnector.bal <consumerKey> <consumerSecret> <accessToken> <accessTokenSecret> <tweetId>
+    bin$ ./ballerina run ../samples/twitterConnector/twitterConnector.bal destroyStatus <consumerKey> <consumerSecret> <accessToken> <accessTokenSecret> <tweetId>
 
   7. getClosestTrendLocations:
-    function main (string[] args) {
-
-        connectors:Twitter twitterConnector = new connectors:Twitter(args[0], args[1], args[2], args[3]);
-
-        message tweetResponse;
-        json tweetJSONResponse;
-
-        tweetResponse = connectors:Twitter.getClosestTrendLocations(twitterConnector, args[4], args[5]);
-
-        tweetJSONResponse = message:getJsonPayload(tweetResponse);
-        system:println(json:toString(tweetJSONResponse));
-    }
-
-    bin$ ./ballerina run ../samples/twitterConnector/twitterConnector.bal <consumerKey> <consumerSecret> <accessToken> <accessTokenSecret> <latitude> <longitude>
+    bin$ ./ballerina run ../samples/twitterConnector/twitterConnector.bal getClosestTrendLocations <consumerKey> <consumerSecret> <accessToken> <accessTokenSecret> <latitude> <longitude>
 
   7. getTopTrendsByPlace:
-    function main (string[] args) {
-
-        connectors:Twitter twitterConnector = new connectors:Twitter(args[0], args[1], args[2], args[3]);
-
-        message tweetResponse;
-        json tweetJSONResponse;
-
-        tweetResponse = connectors:Twitter.getTopTrendsByPlace(twitterConnector, args[4]);
-
-        tweetJSONResponse = message:getJsonPayload(tweetResponse);
-        system:println(json:toString(tweetJSONResponse));
-    }
-
-    bin$ ./ballerina run ../samples/twitterConnector/twitterConnector.bal <consumerKey> <consumerSecret> <accessToken> <accessTokenSecret> <locationId>
-
+    bin$ ./ballerina run ../samples/twitterConnector/twitterConnector.bal getTopTrendsByPlace <consumerKey> <consumerSecret> <accessToken> <accessTokenSecret> <locationId>
