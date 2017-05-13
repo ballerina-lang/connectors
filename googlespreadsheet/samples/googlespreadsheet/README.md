@@ -1,4 +1,4 @@
-# Google Spread sheet Connector Samples
+# Google Spread Sheet Connector Samples
 
 This repo consists of the samples that can be referred in using the Ballerina Google Spread Sheet Connector.
 
