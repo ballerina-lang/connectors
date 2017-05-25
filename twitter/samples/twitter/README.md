@@ -22,7 +22,7 @@ These tests can be improved to use the same Twitter ID generated in the testTwee
 	Access Token
 	Access Token Secret
  2. Set the above twitter account details in the set_env_vars.sh.
- 3. Run the set_env_vars.sh and source the file in the terminal.
+ 3. Source the set_env_vars.sh file in the terminal.
  4. Navigate to $BALLERINA_TOOLS_HOME/bin
  5. Run tests in the same terminal as:
  ./ballerina test ${path_to_test_file_in_connector_repo}/twitter_test.bal
