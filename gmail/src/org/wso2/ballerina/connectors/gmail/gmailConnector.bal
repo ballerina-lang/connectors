@@ -94,7 +94,8 @@ connector ClientConnector (string userId, string accessToken, string refreshToke
         string encodedRequest = "";
 
         if(format == "html") {
-            encodedRequest = strings:replaceAll(utils:base64encode(concatRequest), "\\+","-");
+            encodedRequest = strings:replaceAll(strings:replaceAll(
+                                                    utils:base64encode(concatRequest), "\\+","-"),"/","_");
         } else {
             encodedRequest = utils:base64encode(concatRequest);
         }
@@ -167,7 +168,8 @@ connector ClientConnector (string userId, string accessToken, string refreshToke
         string encodedRequest = "";
 
         if(format == "html") {
-            encodedRequest = strings:replaceAll(utils:base64encode(concatRequest), "\\+","-");
+            encodedRequest = strings:replaceAll(strings:replaceAll(
+                                                    utils:base64encode(concatRequest), "\\+","-"),"/","_");
         } else {
             encodedRequest = utils:base64encode(concatRequest);
         }
@@ -655,7 +657,8 @@ connector ClientConnector (string userId, string accessToken, string refreshToke
         string encodedRequest = "";
 
         if(format == "html") {
-            encodedRequest = strings:replaceAll(utils:base64encode(concatRequest),"\\+","-");
+           encodedRequest = strings:replaceAll(strings:replaceAll(
+                                                   utils:base64encode(concatRequest), "\\+","-"),"/","_");
         } else {
             encodedRequest = utils:base64encode(concatRequest);
         }
