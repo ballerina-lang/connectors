@@ -3,6 +3,7 @@ package org.wso2.ballerina.connectors.medium;
 import org.wso2.ballerina.connectors.oauth2;
 import ballerina.doc;
 import ballerina.lang.messages;
+import ballerina.net.http;
 
 @doc:Description{ value : "Medium client connector"}
 @doc:Param{ value : "accessToken: The access token of the Medium Application"}
@@ -13,7 +14,7 @@ connector ClientConnector (string accessToken, string clientId, string clientSec
 
     string refreshTokenEP = "https://api.medium.com/v1/tokens";
     string baseURL = "https://api.medium.com";
-    oauth2:ClientConnector mediumEP = create oauth2:ClientConnector(baseURL, accessToken, clientId, clientSecret,
+    http:ClientConnector mediumEP = create http:ClientConnector(baseURL) with oauth2:ClientConnector(accessToken, clientId, clientSecret,
         refreshToken, refreshTokenEP);
 
     @doc:Description{ value : "Get Profile Information"}
@@ -25,7 +26,7 @@ connector ClientConnector (string accessToken, string clientId, string clientSec
         message request = {};
         message response;
         getProfileInfoPath = "/v1/me";
-        response = oauth2:ClientConnector.get(mediumEP, getProfileInfoPath, request);
+        response = http:ClientConnector.get(mediumEP, getProfileInfoPath, request);
 
         return response;
     }
@@ -41,7 +42,7 @@ connector ClientConnector (string accessToken, string clientId, string clientSec
         message response;
 
         getContributorsPath = "/v1/publications/" + publicationId + "/contributors";
-        response = oauth2:ClientConnector.get(mediumEP, getContributorsPath, request);
+        response = http:ClientConnector.get(mediumEP, getContributorsPath, request);
 
         return response;
     }
@@ -57,7 +58,7 @@ connector ClientConnector (string accessToken, string clientId, string clientSec
         message response;
 
         getPublicationsPath = "/v1/users/" + userId + "/publications";
-        response = oauth2:ClientConnector.get(mediumEP, getPublicationsPath, request);
+        response = http:ClientConnector.get(mediumEP, getPublicationsPath, request);
 
         return response;
     }
@@ -76,7 +77,7 @@ connector ClientConnector (string accessToken, string clientId, string clientSec
         createProfilePostPath = "/v1/users/" + userId + "/posts";
         messages:setHeader(request, "Content-Type", "application/json");
         messages:setJsonPayload(request, payload);
-        response = oauth2:ClientConnector.post(mediumEP, createProfilePostPath, request);
+        response = http:ClientConnector.post(mediumEP, createProfilePostPath, request);
 
         return response;
     }
@@ -95,7 +96,7 @@ connector ClientConnector (string accessToken, string clientId, string clientSec
         createPublicationPostPath = "/v1/publications/" + publicationId + "/posts";
         messages:setHeader(request, "Content-Type", "application/json");
         messages:setJsonPayload(request, payload);
-        response = oauth2:ClientConnector.post(mediumEP, createPublicationPostPath, request);
+        response = http:ClientConnector.post(mediumEP, createPublicationPostPath, request);
 
         return response;
     }

@@ -4,6 +4,7 @@ import org.wso2.ballerina.connectors.oauth2;
 import ballerina.doc;
 import ballerina.lang.messages;
 import ballerina.lang.strings;
+import ballerina.net.http;
 
 @doc:Description{ value : "Google Spreadsheet client connector"}
 @doc:Param{ value : "accessToken: The accessToken of the Google Spreadsheet account to access the Google Spreadsheet REST API"}
@@ -16,7 +17,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
     string refreshTokenEP = "https://www.googleapis.com/oauth2/v3/token";
     string baseURL = "https://sheets.googleapis.com";
 
-    oauth2:ClientConnector googlespreadsheetEP = create oauth2:ClientConnector(baseURL, accessToken, clientId,
+    http:ClientConnector googlespreadsheetEP = create http:ClientConnector(baseURL) with oauth2:ClientConnector(accessToken, clientId,
                                                                clientSecret, refreshToken, refreshTokenEP);
 
     @doc:Description{ value : "Retrieve Sheet properties and other metadata"}
@@ -56,7 +57,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
                                                                         uriParams, 1, strings:length(uriParams));
         }
 
-        message response = oauth2:ClientConnector.get(googlespreadsheetEP, getSheetMetaDataPath, request);
+        message response = http:ClientConnector.get(googlespreadsheetEP, getSheetMetaDataPath, request);
         return response;
     }
 
@@ -77,7 +78,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, copyToPath, request);
+        message response = http:ClientConnector.post(googlespreadsheetEP, copyToPath, request);
 
         return response;
     }
@@ -117,7 +118,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
             getCellDataPath = getCellDataPath + "?" + strings:subString(uriParams, 1, strings:length(uriParams));
         }
 
-        message response = oauth2:ClientConnector.get(googlespreadsheetEP, getCellDataPath, request);
+        message response = http:ClientConnector.get(googlespreadsheetEP, getCellDataPath, request);
 
         return response;
     }
@@ -169,7 +170,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
                                                                              uriParams, 1, strings:length(uriParams));
         }
 
-        message response = oauth2:ClientConnector.get(googlespreadsheetEP, getMultipleCellDataPath, request);
+        message response = http:ClientConnector.get(googlespreadsheetEP, getMultipleCellDataPath, request);
 
         return response;
     }
@@ -194,7 +195,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.put(googlespreadsheetEP, editCellPath, request);
+        message response = http:ClientConnector.put(googlespreadsheetEP, editCellPath, request);
 
         return response;
     }
@@ -215,7 +216,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, editMultipleCellPath, request);
+        message response = http:ClientConnector.post(googlespreadsheetEP, editMultipleCellPath, request);
 
         return response;
     }
@@ -234,7 +235,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, createSpreadsheetPath, request);
+        message response = http:ClientConnector.post(googlespreadsheetEP, createSpreadsheetPath, request);
 
         return response;
     }
@@ -255,7 +256,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, addSheetBatchRequestPath, request);
+        message response = http:ClientConnector.post(googlespreadsheetEP, addSheetBatchRequestPath, request);
 
         return response;
     }
@@ -276,7 +277,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, deleteSheetBatchRequestPath, request);
+        message response = http:ClientConnector.post(googlespreadsheetEP, deleteSheetBatchRequestPath, request);
 
         return response;
     }
@@ -297,7 +298,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, updateSheetPropertiesBatchRequestPath,
+        message response = http:ClientConnector.post(googlespreadsheetEP, updateSheetPropertiesBatchRequestPath,
                                                        request);
 
         return response;
@@ -319,7 +320,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, deleteDimensionBatchRequestPath, request);
+        message response = http:ClientConnector.post(googlespreadsheetEP, deleteDimensionBatchRequestPath, request);
 
         return response;
     }
@@ -340,7 +341,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, updateCellsBatchRequestPath, request);
+        message response = http:ClientConnector.post(googlespreadsheetEP, updateCellsBatchRequestPath, request);
 
         return response;
     }
@@ -361,7 +362,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, appendDimensionBatchRequestPath, request);
+        message response = http:ClientConnector.post(googlespreadsheetEP, appendDimensionBatchRequestPath, request);
 
         return response;
     }
@@ -382,7 +383,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, updateBordersBatchRequestPath, request);
+        message response = http:ClientConnector.post(googlespreadsheetEP, updateBordersBatchRequestPath, request);
 
         return response;
     }
@@ -403,7 +404,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, repeatCellsBatchRequestPath, request);
+        message response = http:ClientConnector.post(googlespreadsheetEP, repeatCellsBatchRequestPath, request);
 
         return response;
     }
@@ -424,7 +425,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, mergeCellsBatchRequestPath, request);
+        message response = http:ClientConnector.post(googlespreadsheetEP, mergeCellsBatchRequestPath, request);
 
         return response;
     }
@@ -445,7 +446,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, setDataValidationBatchRequestPath, request);
+        message response = http:ClientConnector.post(googlespreadsheetEP, setDataValidationBatchRequestPath, request);
 
         return response;
     }
@@ -466,7 +467,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, copyPasteBatchRequestPath, request);
+        message response = http:ClientConnector.post(googlespreadsheetEP, copyPasteBatchRequestPath, request);
 
         return response;
     }
@@ -488,7 +489,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, cutPasteBatchRequestPath, request);
+        message response = http:ClientConnector.post(googlespreadsheetEP, cutPasteBatchRequestPath, request);
 
         return response;
     }
@@ -510,7 +511,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, updateConditionalFormatRuleBatchRequestPath,
+        message response = http:ClientConnector.post(googlespreadsheetEP, updateConditionalFormatRuleBatchRequestPath,
                                                        request);
 
         return response;
@@ -537,7 +538,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, addConditionalFormatRuleBatchRequestPath
+        message response = http:ClientConnector.post(googlespreadsheetEP, addConditionalFormatRuleBatchRequestPath
                                                        , request);
 
         return response;
@@ -560,7 +561,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, deleteConditionalFormatRuleBatchRequestPath,
+        message response = http:ClientConnector.post(googlespreadsheetEP, deleteConditionalFormatRuleBatchRequestPath,
                                                        request);
 
         return response;
@@ -583,7 +584,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, updateDimensionPropertiesBatchRequestPath,
+        message response = http:ClientConnector.post(googlespreadsheetEP, updateDimensionPropertiesBatchRequestPath,
                                                        request);
 
         return response;
@@ -605,7 +606,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, autoResizeDimensionsBatchRequestPath,
+        message response = http:ClientConnector.post(googlespreadsheetEP, autoResizeDimensionsBatchRequestPath,
                                                        request);
 
         return response;
@@ -627,7 +628,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, insertDimensionBatchRequestPath, request);
+        message response = http:ClientConnector.post(googlespreadsheetEP, insertDimensionBatchRequestPath, request);
 
         return response;
     }
@@ -648,7 +649,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, moveDimensionBatchRequestPath, request);
+        message response = http:ClientConnector.post(googlespreadsheetEP, moveDimensionBatchRequestPath, request);
 
         return response;
     }
@@ -669,7 +670,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, sortRangeBatchRequestPath, request);
+        message response = http:ClientConnector.post(googlespreadsheetEP, sortRangeBatchRequestPath, request);
 
         return response;
     }
@@ -703,7 +704,7 @@ connector ClientConnector (string accessToken, string refreshToken, string clien
         }
 
         messages:setJsonPayload(request, payload);
-        message response = oauth2:ClientConnector.post(googlespreadsheetEP, addRowsColumnsDataPath, request);
+        message response = http:ClientConnector.post(googlespreadsheetEP, addRowsColumnsDataPath, request);
 
         return response;
     }

@@ -1,38 +1,38 @@
-# OAuth2 Client Connector
+# OAuth2 Filter Connector
 
-The OAuth2 connector allows you to handle the authentication flow with oauth2 authentication.
-This can be used in other client connectors which use oauth2 authentication.
+The OAuth2 filter connector allows you to handle the authentication flow with oauth2 authentication.
+This can be used to decorate http client connector which use oauth2 authentication.
 
 ## get
-The get action allows to use http get action with oauth2 authentication flow.
+The get action allows to decorate http get action with oauth2 authentication flow.
 
 ###### Properties
   * path -  The path of the endpoint.
   * request -  The request message.
 
 ## post
-The post action allows to use http post action with oauth2 authentication flow.
+The post action allows to decorate http post action with oauth2 authentication flow.
 
 ###### Properties
   * path -  The path of the endpoint.
   * request -  The request message.
 
 ## put
-The put action allows to use http put action with oauth2 authentication flow.
+The put action allows to decorate http put action with oauth2 authentication flow.
 
 ###### Properties
   * path -  The path of the endpoint.
   * request -  The request message.
 
 ## delete
-The delete action allows to use http delete action with oauth2 authentication flow.
+The delete action allows to decorate http delete action with oauth2 authentication flow.
 
 ###### Properties
   * path -  The path of the endpoint.
   * request -  The request message.
 
 ## patch
-The patch action allows to use http patch action with oauth2 authentication flow.
+The patch action allows to decorate http patch action with oauth2 authentication flow.
 
 ###### Properties
 * path -  The path of the endpoint.
