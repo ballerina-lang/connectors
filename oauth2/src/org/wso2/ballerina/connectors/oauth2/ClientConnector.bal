@@ -12,33 +12,10 @@ import ballerina.net.http;
 @doc:Param{ value : "clientSecret: The client secret of the account"}
 @doc:Param{ value : "refreshToken: The refresh token of the account"}
 @doc:Param{ value : "refreshTokenEP: The refresh token endpoint url"}
-connector ClientConnector (string baseUrl, string accessToken, string clientId, string clientSecret,
+connector ClientConnector<http:ClientConnector httpConnectorEP> (string accessToken, string clientId, string clientSecret,
                                  string refreshToken, string refreshTokenEP) {
 
-    http:ClientConnector httpConnectorEP = create http:ClientConnector(baseUrl);
-
     string accessTokenValue;
-
-    @doc:Description{ value : "Get with OAuth2 authentication"}
-    @doc:Param{ value : "clientConnector: The oauth2 Connector instance"}
-    @doc:Param{ value : "path: The endpoint path"}
-    @doc:Param{ value : "request: The request of the method"}
-    @doc:Return{ value : "response object"}
-    action get (ClientConnector clientConnector, string path, message request) (message) {
-
-        message response;
-
-        accessTokenValue = constructAuthHeader (request, accessTokenValue, accessToken);
-        response = http:ClientConnector.get(httpConnectorEP, path, request);
-
-        if ((http:getStatusCode(response) == 401) && (refreshToken != "" || refreshToken != "null")) {
-            accessTokenValue = getAccessTokenFromRefreshToken(request, accessToken, clientId, clientSecret, refreshToken,
-                                                          refreshTokenEP);
-             response = http:ClientConnector.get(httpConnectorEP, path, request);
-        }
-
-        return response;
-    }
 
     @doc:Description{ value : "Post with OAuth2 authentication"}
     @doc:Param{ value : "clientConnector: The oauth2 Connector instance"}
@@ -56,6 +33,26 @@ connector ClientConnector (string baseUrl, string accessToken, string clientId, 
              accessTokenValue = getAccessTokenFromRefreshToken(request, accessToken, clientId, clientSecret, refreshToken,
                                                           refreshTokenEP);
              response = http:ClientConnector.post(httpConnectorEP, path, request);
+        }
+
+        return response;
+    }
+
+    @doc:Description { value:"The HEAD action implementation of the HTTP Connector."}
+    @doc:Param { value:"c: A connector object" }
+    @doc:Param { value:"path: Resource path " }
+    @doc:Param { value:"m: A message object" }
+    @doc:Return { value:"message: The response message object" }
+    action head (ClientConnector c, string path, message request) (message) {
+        message response;
+
+        accessTokenValue = constructAuthHeader (request, accessTokenValue, accessToken);
+        response = http:ClientConnector.patch(httpConnectorEP, path, request);
+
+        if ((http:getStatusCode(response) == 401) && (refreshToken != "" || refreshToken != "null")) {
+            accessTokenValue = getAccessTokenFromRefreshToken(request, accessToken, clientId, clientSecret, refreshToken,
+                                                              refreshTokenEP);
+            response = http:ClientConnector.head(httpConnectorEP, path, request);
         }
 
         return response;
@@ -82,22 +79,22 @@ connector ClientConnector (string baseUrl, string accessToken, string clientId, 
         return response;
     }
 
-    @doc:Description{ value : "Delete with OAuth2 authentication"}
-    @doc:Param{ value : "clientConnector: The oauth2 Connector instance"}
-    @doc:Param{ value : "path: The endpoint path"}
-    @doc:Param{ value : "request: The request of the method"}
-    @doc:Return{ value : "response object"}
-    action delete (ClientConnector clientConnector, string path, message request) (message) {
-
+    @doc:Description { value:"Invokes an HTTP call with the specified HTTP verb."}
+    @doc:Param { value:"c: A connector object" }
+    @doc:Param { value:"httpVerb: HTTP verb value" }
+    @doc:Param { value:"path: Resource path " }
+    @doc:Param { value:"m: A message object" }
+    @doc:Return { value:"message: The response message object" }
+    action execute (ClientConnector c, string httpVerb, string path, message request) (message) {
         message response;
 
         accessTokenValue = constructAuthHeader (request, accessTokenValue, accessToken);
-        response = http:ClientConnector.delete(httpConnectorEP, path, request);
+        response = http:ClientConnector.patch(httpConnectorEP, path, request);
 
         if ((http:getStatusCode(response) == 401) && (refreshToken != "" || refreshToken != "null")) {
             accessTokenValue = getAccessTokenFromRefreshToken(request, accessToken, clientId, clientSecret, refreshToken,
-                                                          refreshTokenEP);
-            response = http:ClientConnector.delete(httpConnectorEP, path, request);
+                                                              refreshTokenEP);
+            response = http:ClientConnector.execute(httpConnectorEP, httpVerb, path, request);
         }
 
         return response;
@@ -119,6 +116,48 @@ connector ClientConnector (string baseUrl, string accessToken, string clientId, 
             accessTokenValue = getAccessTokenFromRefreshToken(request, accessToken, clientId, clientSecret, refreshToken,
                                                               refreshTokenEP);
             response = http:ClientConnector.patch(httpConnectorEP, path, request);
+        }
+
+        return response;
+    }
+
+    @doc:Description{ value : "Delete with OAuth2 authentication"}
+    @doc:Param{ value : "clientConnector: The oauth2 Connector instance"}
+    @doc:Param{ value : "path: The endpoint path"}
+    @doc:Param{ value : "request: The request of the method"}
+    @doc:Return{ value : "response object"}
+    action delete (ClientConnector clientConnector, string path, message request) (message) {
+
+        message response;
+
+        accessTokenValue = constructAuthHeader (request, accessTokenValue, accessToken);
+        response = http:ClientConnector.delete(httpConnectorEP, path, request);
+
+        if ((http:getStatusCode(response) == 401) && (refreshToken != "" || refreshToken != "null")) {
+            accessTokenValue = getAccessTokenFromRefreshToken(request, accessToken, clientId, clientSecret, refreshToken,
+                                                          refreshTokenEP);
+            response = http:ClientConnector.delete(httpConnectorEP, path, request);
+        }
+
+        return response;
+    }
+
+    @doc:Description{ value : "Get with OAuth2 authentication"}
+    @doc:Param{ value : "clientConnector: The oauth2 Connector instance"}
+    @doc:Param{ value : "path: The endpoint path"}
+    @doc:Param{ value : "request: The request of the method"}
+    @doc:Return{ value : "response object"}
+    action get (ClientConnector clientConnector, string path, message request) (message) {
+
+        message response;
+
+        accessTokenValue = constructAuthHeader (request, accessTokenValue, accessToken);
+        response = http:ClientConnector.get(httpConnectorEP, path, request);
+
+        if ((http:getStatusCode(response) == 401) && (refreshToken != "" || refreshToken != "null")) {
+            accessTokenValue = getAccessTokenFromRefreshToken(request, accessToken, clientId, clientSecret, refreshToken,
+                                                              refreshTokenEP);
+            response = http:ClientConnector.get(httpConnectorEP, path, request);
         }
 
         return response;

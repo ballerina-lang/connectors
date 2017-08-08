@@ -1,31 +1,31 @@
-# Basic Auth Client Connector
+# Basic Auth Filter Connector
 
-The Basic Auth client connector allows you to handle the authentication flow with basic authentication.
-This can be used in other client connectors which use basic authentication.
+The Basic Auth filter connector allows you to handle the authentication flow with basic authentication.
+This can be used to decorate http client connector with basic authentication functionality.
 
 ## get
-The get action allows to use http get action with basic authentication flow.
+The get action allows to decorate http get action with basic authentication flow.
 
 ###### Properties
   * path - The path of the endpoint.
   * request - The request.
 
 ## post
-The post action allows to use http post action with basic authentication flow.
+The post action allows to decorate http post action with basic authentication flow.
 
 ###### Properties
   * path -  The path of the endpoint.
   * request -  The request message.
 
 ## put
-The put action allows to use http put action with basic authentication flow.
+The put action allows to decorate http put action with basic authentication flow.
 
 ###### Properties
   * path - The path of the endpoint.
   * request - The request message.
 
 ## delete
-The delete action allows to use http delete action with basic authentication flow.
+The delete action allows to decorate http delete action with basic authentication flow.
 
 ###### Properties
   * path - The path of the endpoint.

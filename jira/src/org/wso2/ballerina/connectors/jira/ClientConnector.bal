@@ -4,6 +4,7 @@ import ballerina.doc;
 import org.wso2.ballerina.connectors.basicauth;
 import ballerina.lang.messages;
 import ballerina.lang.strings;
+import ballerina.net.http;
 
 @doc:Description {value:"Jira client connector"}
 @doc:Param {value:"uri: URI of the JIRA instance"}
@@ -11,7 +12,7 @@ import ballerina.lang.strings;
 @doc:Param {value:"password: Password of the user used to log in to JIRA"}
 connector ClientConnector (string uri, string username, string password) {
 
-    basicauth:ClientConnector jiraEP = create basicauth:ClientConnector(uri, username, password);
+    http:ClientConnector jiraEP = create http:ClientConnector(uri) with basicauth:ClientConnector(username, password);
 
     @doc:Description {value:"Get Issue Information"}
     @doc:Param {value:"jira: The Jira Connector instance"}
@@ -36,7 +37,7 @@ connector ClientConnector (string uri, string username, string password) {
             jiraPath = jiraPath + "?" + strings:subString(uriParams, 1, strings:length(uriParams));
         }
 
-        message response = basicauth:ClientConnector.get (jiraEP, jiraPath, request);
+        message response = http:ClientConnector.get (jiraEP, jiraPath, request);
 
         return response;
     }
@@ -51,7 +52,7 @@ connector ClientConnector (string uri, string username, string password) {
         string jiraPath = "/rest/api/2/search";
 
         messages:setJsonPayload(request, payload);
-        message response = basicauth:ClientConnector.post (jiraEP, jiraPath, request);
+        message response = http:ClientConnector.post (jiraEP, jiraPath, request);
 
         return response;
     }
@@ -71,7 +72,7 @@ connector ClientConnector (string uri, string username, string password) {
         }
 
         messages:setJsonPayload(request, payload);
-        message response = basicauth:ClientConnector.post (jiraEP, jiraPath, request);
+        message response = http:ClientConnector.post (jiraEP, jiraPath, request);
 
         return response;
     }
@@ -86,7 +87,7 @@ connector ClientConnector (string uri, string username, string password) {
         string jiraPath = "/rest/api/2/issue/" + issueIdOrKey + "/assignee";
 
         messages:setJsonPayload(request, payload);
-        message response = basicauth:ClientConnector.put (jiraEP, jiraPath, request);
+        message response = http:ClientConnector.put (jiraEP, jiraPath, request);
 
         return response;
     }
@@ -100,7 +101,7 @@ connector ClientConnector (string uri, string username, string password) {
         string jiraPath = "/rest/api/2/issue/bulk";
 
         messages:setJsonPayload(request, payload);
-        message response = basicauth:ClientConnector.post (jiraEP, jiraPath, request);
+        message response = http:ClientConnector.post (jiraEP, jiraPath, request);
 
         return response;
     }

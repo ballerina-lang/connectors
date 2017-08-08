@@ -3,6 +3,7 @@ package org.wso2.ballerina.connectors.facebook;
 import ballerina.doc;
 import ballerina.lang.strings;
 import ballerina.net.uri;
+import ballerina.net.http;
 
 import org.wso2.ballerina.connectors.oauth2;
 
@@ -12,7 +13,7 @@ connector ClientConnector (string accessToken) {
 
     string baseURL = "https://graph.facebook.com";
 
-    oauth2:ClientConnector facebookEP = create oauth2:ClientConnector(baseURL, accessToken, "null", "null",
+    http:ClientConnector facebookEP = create http:ClientConnector(baseURL) with oauth2:ClientConnector(accessToken, "null", "null",
                                         "null", "null");
     @doc:Description{ value : "Create a post for user, page, event or group. "}
     @doc:Param{ value : "f: The facebook Connector instance"}
@@ -37,7 +38,7 @@ connector ClientConnector (string accessToken) {
         }
         facebookPath = facebookPath + "?" + strings:subString(uriParams, 1, strings:length(uriParams));
                                                                                                   
-        message response = oauth2:ClientConnector.post(facebookEP, facebookPath, request);
+        message response = http:ClientConnector.post(facebookEP, facebookPath, request);
 
         return response;
     }
@@ -55,7 +56,7 @@ connector ClientConnector (string accessToken) {
             facebookPath = facebookPath + "?fields=" + fields;
         }
 
-        message response = oauth2:ClientConnector.get(facebookEP, facebookPath, request);
+        message response = http:ClientConnector.get(facebookEP, facebookPath, request);
 
         return response;
     }
@@ -68,7 +69,7 @@ connector ClientConnector (string accessToken) {
         message request = {};
         string facebookPath = "/v2.8/" + postId;
 
-        message response = oauth2:ClientConnector.delete(facebookEP, facebookPath, request);
+        message response = http:ClientConnector.delete(facebookEP, facebookPath, request);
 
         return response;
     }
@@ -96,7 +97,7 @@ connector ClientConnector (string accessToken) {
         }
         facebookPath = facebookPath + "?" + strings:subString(uriParams, 1, strings:length(uriParams));
 
-        message response = oauth2:ClientConnector.post(facebookEP, facebookPath, request);
+        message response = http:ClientConnector.post(facebookEP, facebookPath, request);
 
         return response;
     }
@@ -109,7 +110,7 @@ connector ClientConnector (string accessToken) {
         message request = {};
         string facebookPath = "/v2.8/" + objectId + "/likes";
 
-        message response = oauth2:ClientConnector.post(facebookEP, facebookPath, request);
+        message response = http:ClientConnector.post(facebookEP, facebookPath, request);
 
         return response;
 
@@ -128,7 +129,7 @@ connector ClientConnector (string accessToken) {
             facebookPath = facebookPath + "?fields=" + fields;
         }
 
-        message response = oauth2:ClientConnector.get(facebookEP, facebookPath, request);
+        message response = http:ClientConnector.get(facebookEP, facebookPath, request);
 
         return response;
     }
@@ -141,7 +142,7 @@ connector ClientConnector (string accessToken) {
         message request = {};
         string facebookPath = "/v2.8/" + objectId + "/likes";
 
-        message response = oauth2:ClientConnector.delete(facebookEP, facebookPath, request);
+        message response = http:ClientConnector.delete(facebookEP, facebookPath, request);
 
         return response;
     }
@@ -169,7 +170,7 @@ connector ClientConnector (string accessToken) {
         }
         facebookPath = facebookPath + "?" + strings:subString(uriParams, 1, strings:length(uriParams));
 
-        message response = oauth2:ClientConnector.post(facebookEP, facebookPath, request);
+        message response = http:ClientConnector.post(facebookEP, facebookPath, request);
 
         return response;
     }
@@ -187,7 +188,7 @@ connector ClientConnector (string accessToken) {
             facebookPath = facebookPath + "?fields=" + fields;
         }
 
-        message response = oauth2:ClientConnector.get(facebookEP, facebookPath, request);
+        message response = http:ClientConnector.get(facebookEP, facebookPath, request);
 
         return response;
     }
