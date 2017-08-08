@@ -21,14 +21,14 @@ function main (string[] args) {
 
     if( args[0] == "createDraft") {
         gmailResponse = gmail:ClientConnector.createDraft(gmailConnector , args[6], args[7], args[8],
-        args[9], args[10], args[11], args[12], args[13] );
+        args[9], args[10], args[11], args[12], args[13], args[14]);
         gmailJSONResponse = messages:getJsonPayload(gmailResponse);
         system:println(jsons:toString(gmailJSONResponse));
     }
 
     if( args[0] == "updateDraft") {
         gmailResponse = gmail:ClientConnector.updateDraft(gmailConnector, args[6], args[7], args[8], args[9],
-        args[10], args[11], args[12], args[13], args[14]);
+        args[10], args[11], args[12], args[13], args[14], args[15]);
         gmailJSONResponse = messages:getJsonPayload(gmailResponse);
         system:println(jsons:toString(gmailJSONResponse));
     }
@@ -124,7 +124,7 @@ function main (string[] args) {
 
     if( args[0] == "sendMail") {
         gmailResponse = gmail:ClientConnector.sendMail(gmailConnector, args[6], args[7], args[8], args[9], args[10], args[11],
-        args[12], args[13]);
+        args[12], args[13], args[14]);
         gmailJSONResponse = messages:getJsonPayload(gmailResponse);
         system:println(jsons:toString(gmailJSONResponse));
     }

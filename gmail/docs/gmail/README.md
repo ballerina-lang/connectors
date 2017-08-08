@@ -21,6 +21,7 @@ The createDraft action helps to Creates a new draft with the DRAFT label.
 * bcc - To whom sender need to bcc the mail
 * id - Id of the draft to create
 * threadId - thread Id of the draft to reply
+* format - Format of the content, can be text (default) or html
 
 #### Related Gmail documentation
 [createDraft](https://developers.google.com/gmail/api/v1/reference/users/drafts/create)
@@ -39,6 +40,7 @@ The updateDraft action helps to Replaces a draft's content.
 * bcc - To whom sender need to bcc the mail
 * id - Id of the draft to update
 * threadId - thread Id of the draft to reply
+* format - Format of the content, can be text (default) or html
 
 #### Related Gmail documentation
 [updateDraft](https://developers.google.com/gmail/api/v1/reference/users/drafts/update)
@@ -234,6 +236,7 @@ The sendMail action helps to Sends the specified message to the recipients.
 * bcc - To whom sender need to bcc the mail
 * id - Id of the message to reply
 * threadId - To whom sender need to bcc the mail
+* format - Format of the content, can be text (default) or html
 
 #### Related Gmail documentation
 [sendMail](https://developers.google.com/gmail/api/v1/reference/users/messages/send)
@@ -318,9 +321,9 @@ The unTrashMail action helps to Removes the specified message from the trash.
 * getUserProfile  
 `bin$ ./ballerina run samples.bal getUserProfile <userId:-Required> <accessToken:-Required> <refreshToken:-Optional> <clientId:-Optional> <clientSecret:-Optional>`
 * createDraft  
-`bin$ ./ballerina run samples.bal createDraft  <userId:-Required> <accessToken:-Required> <refreshToken:-Optional> <clientId:-Optional> <clientSecret:-Optional> <to:-Optional> <subject:-Optional> <from:-Optional> <"messageBody":-Optional> <cc:-Optional> <bcc:-Optional> <id:-Optional> <threadId:-Optional>`
+`bin$ ./ballerina run samples.bal createDraft  <userId:-Required> <accessToken:-Required> <refreshToken:-Optional> <clientId:-Optional> <clientSecret:-Optional> <to:-Optional> <subject:-Optional> <from:-Optional> <"messageBody":-Optional> <cc:-Optional> <bcc:-Optional> <id:-Optional> <threadId:-Optional> <format:-Optional>`
 * updateDraft  
-`bin$ ./ballerina run samples.bal updateDraft <userId:-Required> <accessToken:-Required> <refreshToken:-Optional> <clientId:-Optional> <clientSecret:-Optional> <draftId:Required> <to:-Optional> <subject:-Optional> <from:-Optional> <"messageBody":-Optional> <cc:-Optional> <bcc:-Optional> <id:-Optional> <threadId:-Optional>`
+`bin$ ./ballerina run samples.bal updateDraft <userId:-Required> <accessToken:-Required> <refreshToken:-Optional> <clientId:-Optional> <clientSecret:-Optional> <draftId:Required> <to:-Optional> <subject:-Optional> <from:-Optional> <"messageBody":-Optional> <cc:-Optional> <bcc:-Optional> <id:-Optional> <threadId:-Optional> <format:-Optional>`
 * readDraft  
 `bin$ ./ballerina run samples.bal readDraft <userId:-Required> <accessToken:-Required> <refreshToken:-Optional> <clientId:-Optional> <clientSecret:-Optional> <draftId:-Required> <format:-Optional>`
 * listDrafts  
@@ -352,7 +355,7 @@ The unTrashMail action helps to Removes the specified message from the trash.
 * listMails  
 `bin$ ./ballerina run samples.bal listMails <userId:-Required> <accessToken:-Required> <refreshToken:-Optional> <clientId:-Optional> <clientSecret:-Optional> <includeSpamTrash:-Optional> <labelIds:-Optional> <maxResults:-Optional> <pageToken:-Optional> <q:-Optional>`
 * sendMail  
-`bin$ ./ballerina run samples.bal sendMail <userId:-Required> <accessToken:-Required> <refreshToken:-Optional> <clientId:-Optional> <clientSecret:-Optional> <to:-Optional> <subject:-Optional> <from:-Optional> <"messageBody":-Optional> <cc:-Optional> <bcc:-Optional> <id:-Optional> <threadId:-Optional>`
+`bin$ ./ballerina run samples.bal sendMail <userId:-Required> <accessToken:-Required> <refreshToken:-Optional> <clientId:-Optional> <clientSecret:-Optional> <to:-Optional> <subject:-Optional> <from:-Optional> <"messageBody":-Optional> <cc:-Optional> <bcc:-Optional> <id:-Optional> <threadId:-Optional> <format:-Optional>`
 * modifyExistingMessage  
 `bin$ ./ballerina run samples.bal modifyExistingMessage <userId:-Required> <accessToken:-Required> <refreshToken:-Optional> <clientId:-Optional> <clientSecret:-Optional> <messageId:-Required> <addLabelIds:-Either addLabelIds or removeLabelIds is required> <removeLabelIds:- Either addLabelIds or removeLabelIds is required>`
 * readMail  

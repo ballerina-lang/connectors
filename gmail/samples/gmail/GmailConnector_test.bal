@@ -38,29 +38,72 @@ function testCreateDraft () {
     string messageBody = "This is test message";
     string cc = userId;
     string bcc = userId;
-    string id = "154b8c77e551c510";
-    string threadId = "154b8c77e551c510";
+    string id = "null";
+    string threadId = "null";
+    string format = "text";
     gmail:ClientConnector connectorInstance = init();
     gmailResponse = gmail:ClientConnector.createDraft (connectorInstance, recipientAddress, subject, from, messageBody
-                                                       , cc, bcc, id, threadId);
+                                                       , cc, bcc, id, threadId, format);
+    gmailJSONResponse = messages:getJsonPayload(gmailResponse);
+    string returnedId = (string)gmailJSONResponse.id;
+    string statusCode = (string)http:getStatusCode(gmailResponse);
+    test:assertTrue(!strings:equalsIgnoreCase(returnedId, "") && strings:equalsIgnoreCase(statusCode, "200"));
+
+    system:println(gmailJSONResponse);
+}
+
+function testCreateDraftHtml () {
+    string subject = "Test Message with Html body";
+    string from = userId;
+    string messageBody = "<i>This is test message</i>";
+    string cc = userId;
+    string bcc = userId;
+    string id = "null";
+    string threadId = "null";
+    string format = "html";
+    gmail:ClientConnector connectorInstance = init();
+    gmailResponse = gmail:ClientConnector.createDraft (connectorInstance, recipientAddress, subject, from, messageBody
+                                                       , cc, bcc, id, threadId, format);
+    gmailJSONResponse = messages:getJsonPayload(gmailResponse);
+    string returnedId = (string)gmailJSONResponse.id;
+    string statusCode = (string)http:getStatusCode(gmailResponse);
+    test:assertTrue(!strings:equalsIgnoreCase(returnedId, "") && strings:equalsIgnoreCase(statusCode, "200"));
+
+    system:println(gmailJSONResponse);
+}
+
+function testUpdateDraft () {
+    string draftId = "";
+    string subject = "Test Subject 1 updated";
+    string from = userId;
+    string messageBody = "Draft message body - Test content";
+    string cc = userId;
+    string bcc = userId;
+    string id = "";
+    string threadId = "";
+    string format = "text";
+    gmail:ClientConnector connectorInstance = init();
+    gmailResponse = gmail:ClientConnector.updateDraft (connectorInstance, draftId, recipientAddress, subject, from
+                                                       , messageBody, cc, bcc, id, threadId, format);
     gmailJSONResponse = messages:getJsonPayload(gmailResponse);
     string returnedId = (string)gmailJSONResponse.id;
     string statusCode = (string)http:getStatusCode(gmailResponse);
     test:assertTrue(!strings:equalsIgnoreCase(returnedId, "") && strings:equalsIgnoreCase(statusCode, "200"));
 }
 
-function testUpdateDraft () {
-    string draftId = "r-6158712664976689510";
+function testUpdateDraftHtml() {
+    string draftId = "";
     string subject = "Test Subject 1 updated";
     string from = userId;
-    string messageBody = "This is test message updated";
+    string messageBody = "<b><i>Draft mesage is updated with html content</i></b>";
     string cc = userId;
     string bcc = userId;
-    string id = "154b8c77e551c510";
-    string threadId = "154b8c77e551c510";
+    string id = "";
+    string threadId = "";
+    string format = "html";
     gmail:ClientConnector connectorInstance = init();
     gmailResponse = gmail:ClientConnector.updateDraft (connectorInstance, draftId, recipientAddress, subject, from
-                                                       , messageBody, cc, bcc, id, threadId);
+                                                       , messageBody, cc, bcc, id, threadId, format);
     gmailJSONResponse = messages:getJsonPayload(gmailResponse);
     string returnedId = (string)gmailJSONResponse.id;
     string statusCode = (string)http:getStatusCode(gmailResponse);
@@ -248,11 +291,31 @@ function testSendMails () {
     string messageBody = "Test message 1";
     string cc = userId;
     string bcc = userId;
-    string id = "154b8c77e551c511";
-    string threadId = "154b8c77e551c512";
+    string id = "null";
+    string threadId = "null";
+    string format = "text";
+    gmail:ClientConnector connectorInstance = init();
+
+    gmailResponse = gmail:ClientConnector.sendMail (connectorInstance, to, subject, from, messageBody
+                                                    , cc, bcc, id, threadId, format);
+    gmailJSONResponse = messages:getJsonPayload(gmailResponse);
+    string statusCode = (string)http:getStatusCode(gmailResponse);
+    test:assertTrue(strings:equalsIgnoreCase(statusCode, "200"));
+}
+
+function testSendMailsHtmlFormat () {
+    string to = recipientAddress;
+    string subject = "Test subject 1";
+    string from = userId;
+    string messageBody = "<p><b>Test message</b><br/><ul><li>One</li><li><b>Two</b></li><li><i>Three</i></li></ul></p>";
+    string cc = userId;
+    string bcc = userId;
+    string id = "null";
+    string threadId = "null";
+    string format = "html";
     gmail:ClientConnector connectorInstance = init();
     gmailResponse = gmail:ClientConnector.sendMail (connectorInstance, to, subject, from, messageBody
-                                                    , cc, bcc, id, threadId);
+                                                    , cc, bcc, id, threadId, format);
     gmailJSONResponse = messages:getJsonPayload(gmailResponse);
     string statusCode = (string)http:getStatusCode(gmailResponse);
     test:assertTrue(strings:equalsIgnoreCase(statusCode, "200"));

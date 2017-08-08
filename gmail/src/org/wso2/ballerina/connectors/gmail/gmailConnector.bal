@@ -47,9 +47,10 @@ connector ClientConnector (string userId, string accessToken, string refreshToke
     @doc:Param{ value : "bcc: To whom sender need to bcc the mail"}
     @doc:Param{ value : "id: Id of the draft to create"}
     @doc:Param{ value : "threadId: thread Id of the draft to reply"}
+    @doc:Param{ value : "format: Format of the content, can be text (default) or html"}
     @doc:Return{ value : "response object"}
     action createDraft(ClientConnector g, string to, string subject, string from, string messageBody,
-                       string cc , string bcc, string id, string threadId) (message) {
+                       string cc , string bcc, string id, string threadId, string format) (message) {
 
         message request = {};
         string concatRequest = "";
@@ -82,11 +83,23 @@ connector ClientConnector (string userId, string accessToken, string refreshToke
             concatRequest = concatRequest + "threadId:" + threadId + "\n";
         }
 
+        if(format == "html") {
+            concatRequest = concatRequest + "Content-Type: text/html; charset=\"utf-8\"\n";
+        }
+
         if(messageBody != "null") {
             concatRequest = concatRequest + "\n" + messageBody + "\n";
         }
 
-        string encodedRequest = utils:base64encode(concatRequest);
+        string encodedRequest = "";
+
+        if(format == "html") {
+            encodedRequest = strings:replaceAll(strings:replaceAll(
+                                                    utils:base64encode(concatRequest), "\\+","-"),"/","_");
+        } else {
+            encodedRequest = utils:base64encode(concatRequest);
+        }
+
         json createDraftRequest = {"message":{"raw": encodedRequest}};
 
         string createDraftPath = "/v1/users/" + userId + "/drafts";
@@ -108,9 +121,10 @@ connector ClientConnector (string userId, string accessToken, string refreshToke
     @doc:Param{ value : "bcc: To whom sender need to bcc the mail"}
     @doc:Param{ value : "id: Id of the draft to reply"}
     @doc:Param{ value : "threadId: thread Id of the draft to reply"}
+    @doc:Param{ value : "format: Format of the content, can be text (default) or html"}
     @doc:Return{ value : "response object"}
     action updateDraft(ClientConnector g, string draftId, string to, string subject, string from,
-                       string messageBody, string cc , string bcc, string id, string threadId) (message) {
+                       string messageBody, string cc , string bcc, string id, string threadId, string format) (message) {
 
         message request = {};
         string concatRequest = "";
@@ -143,11 +157,23 @@ connector ClientConnector (string userId, string accessToken, string refreshToke
             concatRequest = concatRequest + "threadId:" + threadId + "\n";
         }
 
+        if(format == "html") {
+            concatRequest = concatRequest + "Content-Type: text/html; charset=\"utf-8\"\n";
+        }
+
         if(messageBody != "null") {
             concatRequest = concatRequest + "\n" + messageBody + "\n";
         }
 
-        string encodedRequest = utils:base64encode(concatRequest);
+        string encodedRequest = "";
+
+        if(format == "html") {
+            encodedRequest = strings:replaceAll(strings:replaceAll(
+                                                    utils:base64encode(concatRequest), "\\+","-"),"/","_");
+        } else {
+            encodedRequest = utils:base64encode(concatRequest);
+        }
+
         json updateDraftRequest = {"message":{"raw": encodedRequest}};
 
         string updateDraftPath = "/v1/users/" + userId + "/drafts/" +draftId;
@@ -584,9 +610,10 @@ connector ClientConnector (string userId, string accessToken, string refreshToke
     @doc:Param{ value : "bcc: To whom sender need to bcc the mail"}
     @doc:Param{ value : "id: Id of the mail to send"}
     @doc:Param{ value : "threadId: thread Id of the mail to reply"}
+    @doc:Param{ value : "format: Format of the content, can be text (default) or html"}
     @doc:Return{ value : "response object"}
     action sendMail(ClientConnector g, string to, string subject, string from, string messageBody,
-                    string cc , string bcc, string id, string threadId) (message) {
+                    string cc , string bcc, string id, string threadId, string format) (message) {
 
         message request = {};
         string concatRequest = "";
@@ -611,6 +638,10 @@ connector ClientConnector (string userId, string accessToken, string refreshToke
             concatRequest = concatRequest + "bcc:" + bcc + "\n";
         }
 
+        if(format == "html") {
+           concatRequest = concatRequest + "Content-Type: text/html; charset=\"utf-8\"" + "\n";
+        }
+
         if(id != "null") {
             concatRequest = concatRequest + "id:" + id + "\n";
         }
@@ -623,7 +654,15 @@ connector ClientConnector (string userId, string accessToken, string refreshToke
             concatRequest = concatRequest + "\n" + messageBody + "\n";
         }
 
-        string encodedRequest = utils:base64encode(concatRequest);
+        string encodedRequest = "";
+
+        if(format == "html") {
+           encodedRequest = strings:replaceAll(strings:replaceAll(
+                                                   utils:base64encode(concatRequest), "\\+","-"),"/","_");
+        } else {
+            encodedRequest = utils:base64encode(concatRequest);
+        }
+
         json sendMailRequest = {"raw": encodedRequest};
         string sendMailPath = "/v1/users/" + userId + "/messages/send";
         messages:setJsonPayload(request, sendMailRequest);
